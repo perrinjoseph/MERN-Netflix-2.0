@@ -1,0 +1,24 @@
+.fallbackLoadingScreen {
+  height: 100vh;
+  width: 100vw;
+  background-color: $color-dark-bg-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 7px solid rgb(31, 31, 31);
+  border-top-color: $color-red-primary;
+  border-radius: 50%;
+  animation: spin 0.7s infinite Linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

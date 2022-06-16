@@ -1,0 +1,101 @@
+movie ID
+
+Crime
+Sci-Fi
+Romance
+Horror
+
+crash landing on you : 62a58d0e6810940c4438585b
+amazing spider man: 62a58f09cb26d241bfcf4595
+breaking bad : 62a591bacb26d241bfcf45d7
+dream home makeover : 62a59373cb26d241bfcf461f
+
+a test file name img: e8f601b795db3b22213d3b4c7177bd7b
+res.end()
+
+this is a test thumbnail image id to verify that an entry was deleted both from the bucket and the
+from the movies collection. :
+
+
+{
+    "thumbnailImage": {
+        "fieldname": "thumbnailImage",
+        "originalname": "Thumbnail-breaking-bad.jpg",
+        "encoding": "7bit",
+        "mimetype": "image/jpeg",
+        "id": "62a591b9cb26d241bfcf4597",
+        "filename": "80becc720da89f3f2809c07e392bad5d",
+        "metadata": null,
+        "bucketName": "mediaBucket",
+        "chunkSize": 261120,
+        "size": 17063,
+        "uploadDate": "2022-06-12T07:11:53.981Z",
+        "contentType": "image/jpeg"
+    },
+    "bannerImage": {
+        "fieldname": "bannerImage",
+        "originalname": "banner-breaking-bad.jpg",
+        "encoding": "7bit",
+        "mimetype": "image/jpeg",
+        "id": "62a591b9cb26d241bfcf4598",
+        "filename": "f0d5859f8359d8001b81b3fb2393a311",
+        "metadata": null,
+        "bucketName": "mediaBucket",
+        "chunkSize": 261120,
+        "size": 72576,
+        "uploadDate": "2022-06-12T07:11:54.136Z",
+        "contentType": "image/jpeg"
+    },
+    "titleImage": {
+        "fieldname": "titleImage",
+        "originalname": "title-breaking-bad.jpg",
+        "encoding": "7bit",
+        "mimetype": "image/jpeg",
+        "id": "62a591b9cb26d241bfcf4599",
+        "filename": "427562d41c824fffba7a9dbf13d6a89d",
+        "metadata": null,
+        "bucketName": "mediaBucket",
+        "chunkSize": 261120,
+        "size": 64160,
+        "uploadDate": "2022-06-12T07:11:54.118Z",
+        "contentType": "image/jpeg"
+    },
+    "video": {
+        "fieldname": "video",
+        "originalname": "BREAKING BAD - Seasons 1-5 Trailer.mp4",
+        "encoding": "7bit",
+        "mimetype": "video/mp4",
+        "id": "62a591b9cb26d241bfcf459a",
+        "filename": "431d79b716f2ee2aabc17bf8199a3453",
+        "metadata": null,
+        "bucketName": "mediaBucket",
+        "chunkSize": 261120,
+        "size": 7267328,
+        "uploadDate": "2022-06-12T07:11:54.512Z",
+        "contentType": "video/mp4"
+    },
+    "trailer": {
+        "fieldname": "trailer",
+        "originalname": "BREAKING BAD - Seasons 1-5 Trailer.mp4",
+        "encoding": "7bit",
+        "mimetype": "video/mp4",
+        "id": "62a591bacb26d241bfcf45ba",
+        "filename": "0318b17c5b84c97d7a7566e5fd0600e7",
+        "metadata": null,
+        "bucketName": "mediaBucket",
+        "chunkSize": 261120,
+        "size": 7267328,
+        "uploadDate": "2022-06-12T07:11:54.760Z",
+        "contentType": "video/mp4"
+    },
+    "_id": "62a591bacb26d241bfcf45d7",
+    "title": "Breaking Bad",
+    "description": "While Walt tries to subvert Hank's probe into the Albuquerque meth scene, a deadly warning forces Gus to consider a deal with the Mexican cartel.",
+    "year": "2013",
+    "limit": 0.62,
+    "genre": "Crime",
+    "isSeries": false,
+    "createdAt": "2022-06-12T07:11:54.784Z",
+    "updatedAt": "2022-06-12T07:11:54.784Z",
+    "__v": 0
+}

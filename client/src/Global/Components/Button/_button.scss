@@ -1,0 +1,80 @@
+.button {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--primary {
+    @extend .button;
+    color: $color-font-light;
+    background: linear-gradient(to top, $color-red-primary, rgb(219, 80, 103));
+    box-shadow: rgba(155, 0, 26, 0.664) 0px 8px 34px;
+    padding: 5px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+  &--default {
+    @extend .button;
+    color: $color-font-light;
+    padding: 5px 40px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: $color-red-primary;
+  }
+  &--simple {
+    @extend .button;
+    font-weight: 600;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 12px;
+    color: white;
+    background-color: $color-blue-primary;
+    font-family: "Inter", sans-serif;
+    transition: background-color 0.2s ease-in;
+
+    &-disabled {
+      background-color: $color-font-dark-600;
+      cursor: not-allowed;
+    }
+  }
+
+  &--secondary {
+    @extend .button;
+    background: transparent;
+    border: 3px solid white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 3px 20px;
+    backdrop-filter: blur(3px);
+    color: $color-font-light;
+
+    &-filled {
+      @extend .button;
+      background-color: white;
+      color: $color-font-dark-1000;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 5px 25px;
+
+      &:active {
+        background-color: orange;
+      }
+    }
+  }
+}
+
+.mobile-btn {
+  background-color: transparent;
+  border-radius: 100%;
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}

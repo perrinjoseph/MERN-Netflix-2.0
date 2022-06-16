@@ -1,0 +1,38 @@
+.input {
+  position: relative;
+  display: flex;
+  padding: 9px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: clamp(100px, 50vw, 500px);
+
+  &--error-message {
+    color: $color-red-primary;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+  }
+
+  &--field {
+    width: clamp(100px, 50vw, 500px);
+    font-size: 0.9rem;
+    outline: none;
+    border: none;
+  }
+}
+
+.warningIcon {
+  color: red;
+}
+
+@media (max-width: 500px) {
+  .input {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .input--error-message {
+    display: none;
+  }
+}

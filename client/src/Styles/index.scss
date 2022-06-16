@@ -1,0 +1,24 @@
+@import "./fonts";
+@import "./variables";
+@import "./reset";
+@import "./imports";
+
+.GLOBAL-errors-message {
+  color: $color-red-primary;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0px;
+
+  & > :first-child {
+    margin-right: 5px;
+  }
+}
+
+.GLOBAL-input-errorborder {
+  border: 2px solid $color-red-primary;
+}
+
+.GLOBAL--pause-animation {
+  animation-play-state: paused;
+}

@@ -1,0 +1,95 @@
+.account-setup {
+  width: 100vw;
+  height: 100%;
+  background-color: white;
+  color: $color-font-dark-800;
+  padding-top: 60px;
+
+  &--stepper-btns {
+    margin-top: 5vh;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: none;
+
+    & > button {
+      background-color: white;
+      color: $color-font-dark-700;
+      font-weight: 400;
+    }
+    &--counter {
+      text-align: center;
+      font-size: 0.8rem;
+      color: $color-font-dark-1000;
+      width: 100%;
+    }
+  }
+}
+
+.stepForm-container {
+  background-color: $color-font-dark-500;
+  width: clamp(250px, 90vw, 450px);
+  height: 575px;
+  margin-top: 50px;
+  border-radius: 19px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &--header {
+    border-bottom: 3px solid white;
+    padding-bottom: 25px;
+
+    &--subheader {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      font-family: "Inter", sans-serif;
+    }
+    &--title {
+      font-size: 1.5rem !important;
+      font-family: "Inter", sans-serif;
+      color: $color-font-dark-900;
+    }
+  }
+
+  &--footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--form {
+    &--row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    &--col {
+      flex: 0.48;
+    }
+  }
+}
+
+@media (max-width: 776px) {
+  .account-setup--horizontal-stepper {
+    display: none;
+  }
+  .account-setup--stepper-btns {
+    display: flex;
+  }
+}
+@media (max-width: 400px) {
+  .stepForm-container {
+    margin-top: 200px;
+    background-color: white;
+    padding: 10px;
+    width: 100vw;
+    height: 100%;
+    min-height: 500px;
+    justify-content: space-evenly;
+  }
+}

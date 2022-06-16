@@ -1,0 +1,75 @@
+.account-setup-inputs {
+  margin: 6px 0px;
+
+  &--checkbox {
+    display: flex;
+    justify-content: left;
+
+    &-label {
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem !important ;
+    }
+
+    &--checkBoxBg {
+      cursor: pointer;
+      min-width: 19px;
+      height: 18px;
+      background-color: white;
+      border-radius: 4px;
+      border: 1px solid $color-font-dark-600;
+      margin-right: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &--checked {
+        @extend .account-setup-inputs--checkbox--checkBoxBg;
+        background-color: $color-blue-primary;
+        border: 1px solid $color-font-dark-500;
+      }
+    }
+  }
+
+  &--default {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    margin-top: 3px;
+    font-family: "Inter", sans-serif;
+
+    &::placeholder {
+      font-family: "Inter", sans-serif;
+      color: $color-placeholder;
+    }
+
+    &::-ms-input-placeholder {
+      font-family: "Inter", sans-serif;
+      color: $color-placeholder;
+    }
+
+    &:-ms-input-placeholder {
+      font-family: "Inter", sans-serif;
+      color: $color-placeholder;
+    }
+  }
+  &--label {
+    font-family: "Inter", sans-serif;
+    margin-left: 5px;
+    font-size: 0.9rem;
+  }
+}
+
+.clickable-links {
+  color: $color-blue-primary;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .account-setup-inputs--default {
+    background-color: $color-font-dark-500;
+  }
+}

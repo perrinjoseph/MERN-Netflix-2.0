@@ -1,0 +1,76 @@
+.horizontal-stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--progressBar {
+    width: 15vw;
+    border-bottom: 2px dashed white;
+    transition: 0.4s ease-in-out;
+
+    &-Incomplete {
+      @extend .horizontal-stepper--progressBar;
+      border-bottom: 1px dashed $color-font-dark-600;
+    }
+
+    &-Completed {
+      @extend .horizontal-stepper--progressBar;
+      border-bottom: 2px solid $color-font-dark-600;
+    }
+  }
+}
+
+.step {
+  display: flex;
+  margin: 0px 25px;
+  justify-content: center;
+  align-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 100%;
+  transition: 0.2s ease-in-out;
+  background-color: $color-font-dark-600;
+  cursor: pointer;
+
+  &--title {
+    font-size: 17px;
+    font-weight: 200;
+    font-family: "Inter", sans-serif;
+    position: absolute;
+    top: -40px;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &--inner {
+    width: 40%;
+    height: 40%;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease-in-out;
+  }
+
+  &-status-completed {
+    background-color: $color-blue-primary;
+    transition: 0.2s ease-in-out;
+  }
+
+  &-status-inProgress {
+    background-color: $color-font-dark-800;
+    transition: 0.2s ease-in-out;
+  }
+}
+
+.icon {
+  font-size: 50px;
+}
+
+.--InProgress {
+  @extend .step--title;
+  color: $color-font-dark-800 !important;
+  font-weight: 600;
+}

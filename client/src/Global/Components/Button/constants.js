@@ -1,0 +1,6 @@
+export const buttonTypes = {
+  PRIMARY: "PRIMARY",
+  SIMPLE: "SIMPLE",
+  SECONDARY: "SECONDARY",
+  SECONDARY_FILLED: "SECONDARY_FILLED",
+};

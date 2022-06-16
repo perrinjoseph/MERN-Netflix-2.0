@@ -1,0 +1,90 @@
+.slider {
+  position: relative;
+  margin: 20px 0px;
+  z-index: 1;
+
+  &:hover {
+    z-index: 2;
+  }
+
+  &--title {
+    color: $color-font-light;
+    margin-bottom: 10px;
+    margin-left: 50px;
+  }
+
+  &--main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &--carousel {
+      width: 100%;
+      padding: 0 50px;
+      display: flex;
+      align-items: center;
+      transition: all 1s ease-in-out;
+    }
+
+    &--controller {
+      z-index: 10;
+      position: absolute;
+      width: 45px;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.411);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &-left {
+        @extend .slider--main--controller;
+        left: 0;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.781);
+        }
+      }
+      &-right {
+        @extend .slider--main--controller;
+        right: 0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.781);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .slider--main {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  .slider--main--controller {
+    display: none;
+  }
+
+  .slider--title {
+    margin: 10px;
+  }
+  .slider--main--carousel {
+    padding: 0;
+    margin: 0;
+  }
+}

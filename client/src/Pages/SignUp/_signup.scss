@@ -1,0 +1,38 @@
+.signup {
+  color: $color-font-light;
+  background: linear-gradient(
+      to bottom,
+      rgba(1, 1, 1, 0.9),
+      rgba(1, 1, 1, 0.7),
+      rgba(1, 1, 1, 0.9)
+    ),
+    url("../../Global/Assets/Netflix-Background.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &--form {
+    text-align: center;
+    width: 90vw;
+
+    &--header {
+      line-height: 1.15;
+    }
+
+    &--subheading {
+      color: $color-red-primary;
+    }
+
+    &--inputs {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .signup--form--inputs {
+    flex-direction: column;
+  }
+}

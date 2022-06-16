@@ -1,0 +1,274 @@
+.navbar {
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  position: fixed;
+  background: linear-gradient(
+    to bottom,
+    $color-dark-bg-color,
+    rgba(0, 0, 0, 0)
+  );
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0);
+
+
+  &--overlay {
+    position: absolute;
+    top: 0;
+    height: 27vh;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    z-index: -1;
+  }
+
+  &-scrolled {
+    backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  &--section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--netflix-logo {
+      width: 100px;
+      margin-right: 30px;
+    }
+
+    &--netflix-logo-xl {
+      width: 170px;
+    }
+
+    &--netflix-logo-xs {
+      display: none;
+      width: 20px;
+    }
+
+    &--links {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      color: white;
+      list-style: none;
+      position: relative;
+
+      &--dropdown {
+        padding: 10px;
+        width: 180px;
+        right: 10px;
+        background: black;
+        position: absolute;
+        top: 50px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+          rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+          rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+
+        &--item {
+          -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+          -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently*/
+          cursor: pointer;
+          padding: 10px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          border-radius: 10px;
+          transition: all 0.2s ease-in-out;
+          color: $color-font-dark-700;
+
+          &:hover {
+            background-color: rgb(26, 26, 26);
+            color: white;
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+
+          &--icon {
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            font-size: 22px;
+            font-weight: 600;
+          }
+        }
+      }
+
+      &--link {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px 10px;
+      }
+    }
+  }
+  &--icons {
+    font-size: 25px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &-showable {
+      display: none;
+    }
+  }
+
+  &--avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar {
+    padding: 20px 30px;
+  }
+
+  .navbar--icons {
+    margin: 0px 5px;
+  }
+
+  .navbar--section--netflix-logo {
+    display: none;
+  }
+  .navbar--section--netflix-logo-xl {
+    display: none;
+  }
+  .navbar--section--netflix-logo-xs {
+    display: block;
+    width: 20px;
+  }
+}
+
+//These are different type of navbar styles
+.Account-Setup {
+  background: white;
+  border-bottom: 1px solid $color-borders-light;
+}
+
+.navbar-mobile {
+  background: rgba($color: $color-dark-bg-color, $alpha: 0.6);
+  backdrop-filter: blur(20px);
+  padding: 6px 0px;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  bottom: 0;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+
+  &--buttons {
+    flex: 1;
+    font-size: 9px;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: $color-font-dark-800;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    &-clicked {
+      color: $color-font-light;
+    }
+  }
+}
+
+.cheveron--container {
+  transition: 0.2s ease-in-out;
+
+  &-flipped {
+    transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 871px) {
+  #navbar-left-links {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .navbar-scrolled {
+    backdrop-filter: blur(0);
+    background: linear-gradient(
+      to bottom,
+      $color-dark-bg-color,
+      rgba(0, 0, 0, 0)
+    );
+  }
+  #navbar-left-links > li:nth-child(1),
+  #navbar-left-links > li:nth-child(4) {
+    display: none;
+  }
+
+  .navbar--section--links--link-mobile {
+    width: 80px;
+    margin: 0px;
+  }
+
+  .navbar--section--netflix-logo {
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar--overlay-show {
+    background: linear-gradient(
+      to bottom,
+      rgba($color: $color-dark-bg-color, $alpha: 1),
+      rgba($color: $color-dark-bg-color, $alpha: 0.4),
+      rgba(0, 0, 0, 0)
+    );
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar-mobile {
+    visibility: visible;
+  }
+
+  .navbar--icons-hidable {
+    display: none;
+  }
+
+  .navbar--icons-showable {
+    display: block;
+  }
+}
