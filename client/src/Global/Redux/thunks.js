@@ -15,7 +15,6 @@ export const loginUserThunk =
       dispatch(GLOBAL_ACTIONS.loginUserSuccessAction(response.data));
       return true;
     } catch (err) {
-      console.log(err);
       dispatch(GLOBAL_ACTIONS.loginUserErrorAction(err.data?.error));
       return false;
     }

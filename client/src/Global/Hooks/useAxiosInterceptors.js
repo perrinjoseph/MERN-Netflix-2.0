@@ -9,20 +9,21 @@ function useAxiosInterceptors(navigate) {
   because the user is not authorized, therefore the user wont be able to visits
   pages like / , /accountSetup and other public routes.
   */
-
+  const firstLoad = useRef(true);
   useEffect(() => {
     axiosClient.interceptors.response.use(
       (data) => {
         return Promise.resolve(data);
       },
       (error) => {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 && firstLoad.current === false) {
           console.log("**Token Expired**");
           navigate("/login");
         }
         return Promise.reject(error.response);
       }
     );
+    firstLoad.current = false;
   }, []);
 }
 
