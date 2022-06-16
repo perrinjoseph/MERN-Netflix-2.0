@@ -38,8 +38,19 @@ body {
   text-decoration: none;
 }
 
-.link-blue {
-  color: $color-blue-primary;
+.link {
+  &-blue {
+    color: $color-blue-primary;
+  }
+  &-primary {
+  }
+
+  &-footer {
+    color: $color-font-dark-800;
+    &:hover {
+      color: white;
+    }
+  }
 }
 
 code {
