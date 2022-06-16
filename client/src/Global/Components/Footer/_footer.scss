@@ -1,140 +1,131 @@
 .footer {
   position: relative;
-  width: 100%;
   background-color: $color-font-dark-1000;
-  min-height: 400px;
+  min-height: 250px;
   padding: 40px 10%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 
-  &--description {
-    color: $color-font-dark-700;
-  }
-
-  &--icons {
-    @extend .footer--nav--items;
-    &:hover {
-      transform: scale(1.2) !important;
-    }
-  }
-
-  &--left {
-    height: 300px;
+  &--row {
     display: flex;
-    min-width: 300px;
-
-    &--top {
-      color: white;
-    }
+    width: 100%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 
-  &--right {
-    height: 300px;
-
-    &--bottom {
-      margin-top: 20px;
-      display: flex;
-      justify-content: left;
-      justify-content: space-evenly;
-      &--left {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 200px;
-        color: white;
-      }
-      &--right {
-        width: 200px;
-        color: white;
-      }
-    }
-
-    &--top {
-      display: flex;
-      height: 200px;
-      justify-content: space-evenly;
-
-      &--left {
-        width: 200px;
-        & > ul {
-          margin-top: 30px;
-        }
-        & > ul > li {
-          @extend .footer--nav--items;
-          list-style: none;
-        }
-
-        &--header {
-          @extend .footer--headers;
-        }
-      }
-
-      &--right {
-        width: 200px;
-        & > ul {
-          margin-top: 30px;
-        }
-        & > ul > li {
-          @extend .footer--nav--items;
-          list-style: none;
-        }
-        &--header {
-          @extend .footer--headers;
-        }
-      }
-    }
+  &--header {
+    margin-bottom: 25px;
   }
-}
 
-.footer--headers {
-  color: white;
-  font-weight: 600;
-}
+  &--terms {
+    border-top: 1px solid $color-font-dark-960;
+    margin-top: 50px;
+    padding-top: 70px;
+    padding-bottom: 50px;
+    width: 100%;
+    font-size: 13px;
+    color: $color-font-dark-800;
+  }
 
-.footer--nav--items {
-  line-height: 19px;
-  color: $color-font-dark-700;
-  font-weight: 400;
-  transition: all 0.1s ease-in-out;
-
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.03);
+  &--col1 {
+    grid-area: col1;
+    height: 100%;
+    display: flex;
     color: white;
-  }
-}
-
-.footer-icons {
-  margin: 0px 10px;
-}
-
-@media (max-width: 911px) {
-  .footer {
     flex-direction: column;
-    justify-content: center;
+
+    &--icons {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      margin-top: 10px;
+
+      &--icon {
+        @extend .footer--links;
+        margin-right: 20px !important;
+      }
+    }
   }
-  .footer--left {
+
+  &--col2 {
+    min-width: 200px;
+    margin-top: 10px;
+    height: 100%;
+    color: white;
     display: flex;
-    justify-content: center;
+
     align-items: center;
-  }
-  .footer--right--top {
-    display: flex;
+    flex-direction: column;
 
-    justify-content: center;
+    & > nav > ul > li {
+      @extend .footer--links;
+    }
+  }
+
+  &--col3 {
+    min-width: 200px;
+    margin-top: 10px;
+    grid-area: col3;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    & > nav > ul > li {
+      @extend .footer--links;
+    }
+  }
+
+  &--col4 {
+    min-width: 200px;
+    margin-top: 10px;
+    grid-area: col4;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+
+    & > nav > ul > li {
+      @extend .footer--links;
+    }
   }
 }
 
-@media (max-width: 519px) {
-  .footer--right--top {
-    flex-direction: column;
+.footer--links {
+  font-size: 13px;
+  margin: 5px 0px;
+  cursor: pointer;
+  list-style-type: none;
+  color: $color-font-dark-800;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    @extend .footer--links-hover;
   }
-  .footer--right--top--right {
-    margin-top: 30px;
+}
+
+.footer--links-hover {
+  color: white;
+  transform: scale(1.05);
+}
+
+@media (max-width: 290px) {
+  .footer--col1 {
+    width: 100%;
   }
-  .footer--left {
+}
+
+@media (max-width: 501px) {
+  .footer--row {
     justify-content: left;
+  }
+  .footer--col2,
+  .footer--col3,
+  .footer--col4 {
+    align-items: flex-start;
   }
 }

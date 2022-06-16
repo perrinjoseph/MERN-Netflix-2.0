@@ -63,8 +63,9 @@
       }
 
       &--title {
-        width: clamp(250px, 40vw, 30vw);
+        width: 450px;
         height: 300px;
+        
         object-fit: contain;
         object-position: bottom;
         animation: fadeIn 1s;
@@ -171,7 +172,9 @@
   .home--content--info--buttons {
     display: none;
   }
-
+  .home--content--info--title {
+    width: 100%;
+  }
   .home--content {
     margin-top: -40vh;
   }
