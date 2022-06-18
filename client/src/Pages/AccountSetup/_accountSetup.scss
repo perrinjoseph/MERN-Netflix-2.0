@@ -42,7 +42,7 @@
 .stepForm-container {
   background-color: $color-font-dark-500;
   width: clamp(250px, 90vw, 450px);
-  height: 575px;
+  height: 645px;
   margin-top: 50px;
   border-radius: 19px;
   padding: 40px;
@@ -104,5 +104,11 @@
     height: 100%;
     min-height: 500px;
     justify-content: space-evenly;
+  }
+}
+
+@media (max-height: 850px) {
+  .account-setup--stepper-btns {
+    display: none;
   }
 }
