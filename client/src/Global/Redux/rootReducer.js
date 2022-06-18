@@ -36,6 +36,7 @@ const userReducer = (state = defaultUserState, action) => {
       return {
         ...state,
         isAuthenticating: API_STATUS.ERROR,
+        error: action.payload.error,
         data: null,
       };
 

@@ -1,5 +1,5 @@
 import axiosClient from "../Api/axiosConfig";
-import API_ENDPOINTS from "../Constants/api-endpoints";
+import API_ENDPOINTS from "../Api/api-endpoints";
 import GLOBAL_ACTIONS from "./actions";
 
 export const loginUserThunk =
@@ -15,7 +15,6 @@ export const loginUserThunk =
       dispatch(GLOBAL_ACTIONS.loginUserSuccessAction(response.data));
       return true;
     } catch (err) {
-      console.log(err);
       dispatch(GLOBAL_ACTIONS.loginUserErrorAction(err.data?.error));
       return false;
     }
@@ -38,6 +37,6 @@ export const logoutUserThunk = () => async (dispatch) => {
     await axiosClient.post(API_ENDPOINTS.AUTH.POST_LOGOUT);
     dispatch(GLOBAL_ACTIONS.logoutUserSuccessAction());
   } catch (error) {
-    console.log(error);
+    dispatch(GLOBAL_ACTIONS.logoutUserSuccessAction());
   }
 };

@@ -13,7 +13,7 @@ const verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.CLIENT_SECRET, (err, user) => {
     if (err)
       return res
-        .status(400)
+        .status(403)
         .json({ error: "Not authorized to view this page." });
     req.user = user;
   });

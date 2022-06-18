@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { authenticateUserThunk } from "../Redux/thunks";
 
 function useAuthentication() {
