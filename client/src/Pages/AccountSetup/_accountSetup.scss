@@ -1,9 +1,8 @@
 .account-setup {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-color: white;
   color: $color-font-dark-800;
-  padding-top: 60px;
 
   &--stepper-btns {
     margin-top: 5vh;
@@ -24,6 +23,20 @@
       width: 100%;
     }
   }
+}
+.account-signup-errormsg {
+  height: 20px;
+  width: 100%;
+  margin-top: -5px !important;
+  margin-left: 5px !important;
+}
+
+.hide--errormsg {
+  opacity: 0;
+}
+
+.show--errormsg {
+  opacity: 1;
 }
 
 .stepForm-container {

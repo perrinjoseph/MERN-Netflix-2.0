@@ -31,12 +31,14 @@ const verifyUserSignedUpStartedAction = () => ({
 
 const verifyUserSignedUpSuccessAction = (email) => ({
   type: SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_SUCCESS,
-  payload: { email },
+  payload: { data: email },
 });
 
-const verifyUserSignedUpErrorAction = () => ({
+const verifyUserSignedUpErrorAction = (error) => ({
   type: SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_ERROR,
+  payload: { error },
 });
+
 export const signUpActions = {
   updateSignUpProgress,
   changeInputField,

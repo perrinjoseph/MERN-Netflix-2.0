@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { INPUT_TYPES } from "../../../../Global/Constants/constant";
 import { REGIONS, STEPS } from "../../constants";
 import AccountSetupInputs from "../../AccountSetupInputs";
@@ -10,6 +10,13 @@ import { stepStatus } from "../../../../Global/Components/HorizontalStepper/cons
 
 function PersonalInformation() {
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    region: "",
+    tos: "",
+  });
   const { email, password, confirmPassword, region, agreement, activeStep } =
     useSelector(
       ({
@@ -53,19 +60,26 @@ function PersonalInformation() {
       </header>
       <form className="stepForm-container--form">
         <AccountSetupInputs
+          error={errors.email}
           placeholder="Email"
           title="Email"
-          handleOnChange={(value) =>
-            dispatch(signUpActions.changeInputField(value, "email"))
-          }
+          handleOnChange={(value) => {
+            dispatch(signUpActions.changeInputField(value, "email"));
+            setErrors({ ...errors, email: !value ? "Required Field" : "" });
+          }}
           defaultInput={email}
         />
         <section className="stepForm-container--form--row">
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
-              handleOnChange={(value) =>
-                dispatch(signUpActions.changeInputField(value, "password"))
-              }
+              error={errors.password}
+              handleOnChange={(value) => {
+                dispatch(signUpActions.changeInputField(value, "password"));
+                setErrors({
+                  ...errors,
+                  password: !value ? "Required Field" : "",
+                });
+              }}
               defaultInput={password}
               placeholder="Password"
               title="Password"
@@ -74,11 +88,20 @@ function PersonalInformation() {
           </div>
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
-              handleOnChange={(value) =>
+              error={errors.confirmPassword}
+              handleOnChange={(value) => {
                 dispatch(
                   signUpActions.changeInputField(value, "confirmPassword")
-                )
-              }
+                );
+                setErrors({
+                  ...errors,
+                  confirmPassword: !value
+                    ? "Required Field"
+                    : value === password
+                    ? ""
+                    : "Password must match",
+                });
+              }}
               defaultInput={confirmPassword}
               placeholder="Confirm Password"
               title="Confirm Password"

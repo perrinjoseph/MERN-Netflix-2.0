@@ -9,8 +9,9 @@ export const verifyUserSignedUpThunk = (email) => async (dispatch) => {
       email,
     });
     dispatch(signUpActions.verifyUserSignedUpSuccessAction(email));
+    return true;
   } catch (error) {
-    console.log(error);
     dispatch(signUpActions.verifyUserSignedUpErrorAction(error));
+    return false;
   }
 };

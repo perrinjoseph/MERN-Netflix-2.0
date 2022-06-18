@@ -83,18 +83,21 @@ const signUpReducer = (state = defaultState, action) => {
         apiStatus: API_STATUS.GETTING,
         error: null,
       };
+
     case SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_SUCCESS:
       return {
         ...state,
         data: { ...state.data, email: action.payload.data },
         apiStatus: API_STATUS.SUCCESS,
       };
+
     case SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_ERROR:
       return {
         ...state,
         apiStatus: API_STATUS.ERROR,
         error: action.payload.error,
       };
+
     default:
       return state;
   }

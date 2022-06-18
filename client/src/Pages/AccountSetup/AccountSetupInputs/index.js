@@ -13,6 +13,7 @@ function AccountSetupInputs({
   isChecked,
   defaultInput,
   handleOnChange,
+  error,
 }) {
   const [checked, setChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -37,6 +38,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CREDIT_CARD_DATE:
@@ -52,6 +61,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CREDIT_CARD_NUMBER:
@@ -67,6 +84,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CHECK_BOX:
@@ -112,6 +137,14 @@ function AccountSetupInputs({
             id={placeholder}
             type="password"
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
 
@@ -138,6 +171,14 @@ function AccountSetupInputs({
               </option>
             ))}
           </select>
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
 
@@ -157,6 +198,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
   }
