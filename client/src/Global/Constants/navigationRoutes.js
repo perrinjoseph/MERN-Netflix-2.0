@@ -3,7 +3,6 @@ import AccountSetup from "../../Pages/AccountSetup/AccountSetup";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
 import { navbarTypes } from "../Components/Navbar/constants";
-import Navbar from "../Components/Navbar/Navbar";
 
 //Lazy loaded components
 const Home = lazy(() => import("../../Pages/Home"));

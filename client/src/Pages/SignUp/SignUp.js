@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Button from "../../Global/Components/Button/Button";
 import Center from "../../Global/Layouts/Center";
 import Input from "../../Global/Components/Input/Input";
-import useAuthorization from "../../Global/Hooks/useAuthorization";
+import Navbar from "../../Global/Components/Navbar/Navbar";
+import { navbarTypes } from "../../Global/Components/Navbar/constants";
 
 function SignUp() {
-  useAuthorization();
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({ email: false });
   const handleOnSubmit = (e) => {
@@ -15,6 +15,7 @@ function SignUp() {
 
   return (
     <main className="signup">
+      <Navbar type={navbarTypes.SIGN_UP} />
       <Center>
         <form onSubmit={handleOnSubmit} className="signup--form">
           <h1 className="signup--form--header">

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../Global/Components/Button/Button";
 import { buttonTypes } from "../../Global/Components/Button/constants";
 import HorizontalStepper from "../../Global/Components/HorizontalStepper/HorizontalStepper";
-import useAuthorization from "../../Global/Hooks/useAuthorization";
+import { navbarTypes } from "../../Global/Components/Navbar/constants";
+import Navbar from "../../Global/Components/Navbar/Navbar";
 import Center from "../../Global/Layouts/Center";
 import { colors } from "../../Styles/colors";
 import { signUpActions } from "../SignUp/redux/actions";
@@ -12,7 +13,6 @@ import PersonalInformation from "./Pages/PersonalInformation";
 import TermsAndConditions from "./Pages/TermsAndConditions";
 
 function AccountSetup() {
-  useAuthorization();
   const dispatch = useDispatch();
   const { activeStep, stepDetails } = useSelector(
     ({
@@ -43,6 +43,7 @@ function AccountSetup() {
 
   return (
     <main className="account-setup">
+      <Navbar type={navbarTypes.ACCOUNT_SETUP} />
       <Center>
         <div className="account-setup--horizontal-stepper">
           <HorizontalStepper
