@@ -25,10 +25,25 @@ const updateSignUpProgress = (data) => ({
   payload: data,
 });
 
+const verifyUserSignedUpStartedAction = () => ({
+  type: SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_STARTED,
+});
+
+const verifyUserSignedUpSuccessAction = (email) => ({
+  type: SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_SUCCESS,
+  payload: { email },
+});
+
+const verifyUserSignedUpErrorAction = () => ({
+  type: SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_ERROR,
+});
 export const signUpActions = {
   updateSignUpProgress,
   changeInputField,
   changeStepStatus,
   changeSignUpActiveStep,
   changeTermsAndConditionCheckbox,
+  verifyUserSignedUpStartedAction,
+  verifyUserSignedUpSuccessAction,
+  verifyUserSignedUpErrorAction,
 };

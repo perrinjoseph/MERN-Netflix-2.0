@@ -10,7 +10,6 @@ function SignUp() {
   const [errors, setErrors] = useState({ email: false });
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
   };
 
   return (

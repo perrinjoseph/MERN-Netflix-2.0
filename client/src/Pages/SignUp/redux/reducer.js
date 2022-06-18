@@ -1,3 +1,4 @@
+import { API_STATUS } from "../../../Global/Api/constants";
 import { stepStatus } from "../../../Global/Components/HorizontalStepper/constant";
 import SIGNUP_ACTION_TYPES from "./types";
 
@@ -75,6 +76,25 @@ const signUpReducer = (state = defaultState, action) => {
 
     case SIGNUP_ACTION_TYPES.CHANGE_ACTIVE_STEP:
       return { ...state, activeStep: action.payload };
+
+    case SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_STARTED:
+      return {
+        ...state,
+        apiStatus: API_STATUS.GETTING,
+        error: null,
+      };
+    case SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_SUCCESS:
+      return {
+        ...state,
+        data: { ...state.data, email: action.payload.data },
+        apiStatus: API_STATUS.SUCCESS,
+      };
+    case SIGNUP_ACTION_TYPES.VERIFY_USER_EXISTS_ERROR:
+      return {
+        ...state,
+        apiStatus: API_STATUS.ERROR,
+        error: action.payload.error,
+      };
     default:
       return state;
   }

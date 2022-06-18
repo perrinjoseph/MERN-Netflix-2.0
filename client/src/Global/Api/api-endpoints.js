@@ -9,6 +9,7 @@ const API_ENDPOINTS = {
     GET_FIND_USER: "/users/find",
     GET_FIND_ALL_USERS: "/users/",
     GET_USER_STATS: "/users/stats",
+    POST_VERIFY_USER_SIGNED_UP: "/find",
     PUT_UPDATE_UPSER: "/users/update/",
     DELETE_USER: "/users/delete/",
   },
