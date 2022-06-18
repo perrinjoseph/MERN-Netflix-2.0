@@ -7,10 +7,10 @@ import Center from "../../Global/Layouts/Center";
 import { loginUserThunk } from "../../Global/Redux/thunks";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { API_STATUS } from "../../Global/Api/constants";
-import useAuthorization from "../../Global/Hooks/useAuthorization";
+import Navbar from "../../Global/Components/Navbar/Navbar";
+import { navbarTypes } from "../../Global/Components/Navbar/constants";
 
 function Login() {
-  useAuthorization();
   const { apiStatus, errorMessage, data } = useSelector(
     ({ user: { apiStatus, error, data } }) => ({
       apiStatus,
@@ -52,6 +52,7 @@ function Login() {
 
   return (
     <main className="login-page">
+      <Navbar type={navbarTypes.LOGIN} />
       <Center>
         <section className="login-page--container">
           <form onSubmit={handleOnSubmit}>

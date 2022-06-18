@@ -1,77 +1,52 @@
-import React, { Suspense } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import Navbar from "./Global/Components/Navbar/Navbar";
-import Watch from "./Pages/Watch";
-import { useSelector } from "react-redux";
-import routes, {
-  ROUTE_SECURITY_TYPES,
-} from "./Global/Constants/navigationRoutes";
-import ProtectedRoute from "./Auth/ProtectedRoute";
-import { nanoid } from "nanoid";
+import React, { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 import FallbackLoadingScreen from "./Global/Components/FallbackLoadingScreen";
 import { FALLBACK_SCREEN_TYPES } from "./Global/Components/FallbackLoadingScreen/constants";
 import useAuthentication from "./Global/Hooks/useAuthentication";
-import { navbarTypes } from "./Global/Components/Navbar/constants";
 import useAxiosInterceptors from "./Global/Hooks/useAxiosInterceptors";
-import Footer from "./Global/Components/Footer";
+import AccountSetup from "./Pages/AccountSetup/AccountSetup";
+import Login from "./Pages/Login/Login";
+import SignUp from "./Pages/SignUp/SignUp";
+import ProtectedRoute from "./Router/ProtectedRoute";
+import PublicRoute from "./Router/PublicRoute";
+//Lazy loading home component
+const Home = lazy(() => import("./Pages/Home"));
 
-function App() {
-  const navigate = useNavigate();
-  useAxiosInterceptors(navigate);
+function NewApp() {
+  useAxiosInterceptors();
   const [isLoading] = useAuthentication();
-  const { openPlayer, data } = useSelector(
-    ({ mediaPlayer: { openPlayer }, user: { data } }) => ({
-      openPlayer,
-      data,
-    })
-  );
 
+  /*
+  custom navbars for Signup and login page are put inside the components themselves
+  because it would not make sense to create nested routes for them just to create 
+  a common header component. They are unique anyways for the login 
+  and the sign up page. 
+  */
   return (
     <div className="App">
       {isLoading && (
         <FallbackLoadingScreen type={FALLBACK_SCREEN_TYPES.APP_LOADING} />
       )}
       {!isLoading && (
-        <Routes>
-          {routes.map((route) => (
-            <Route
-              key={nanoid(5)}
-              path={route.path}
-              element={
-                <React.Fragment>
-                  {route.security === ROUTE_SECURITY_TYPES.PROTECTED ? (
-                    <ProtectedRoute>
-                      <Suspense
-                        fallback={
-                          <FallbackLoadingScreen
-                            type={FALLBACK_SCREEN_TYPES.APP_LOADING}
-                          />
-                        }
-                      >
-                        <Navbar type={route.navbar} />
-                        <Navbar type={navbarTypes.MOBILE_HOME} />
-                        {route.component}
-                        <Footer />
-                      </Suspense>
-
-                      {openPlayer && <Watch />}
-                    </ProtectedRoute>
-                  ) : (
-                    <>
-                      <Navbar type={route.navbar} />
-                      {route.component}
-                      {openPlayer && <Watch />}
-                      <Footer />
-                    </>
-                  )}
-                </React.Fragment>
-              }
-            />
-          ))}
-        </Routes>
+        <Suspense
+          fallback={
+            <FallbackLoadingScreen type={FALLBACK_SCREEN_TYPES.APP_LOADING} />
+          }
+        >
+          <Routes>
+            <Route path="/" element={<PublicRoute />}>
+              <Route index element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/accountsetup" element={<AccountSetup />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/home" element={<Home />} />
+            </Route>
+          </Routes>
+        </Suspense>
       )}
     </div>
   );
 }
 
-export default App;
+export default NewApp;

@@ -6,6 +6,9 @@ import downButton from "../../Assets/down.svg";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
+import axiosClient from "../../Api/axiosConfig";
+import API_ENDPOINTS from "../../Api/api-endpoints";
+import { logoutUserThunk } from "../../Redux/thunks";
 
 const Card = React.forwardRef(
   (
@@ -21,9 +24,10 @@ const Card = React.forwardRef(
     },
     ref
   ) => {
-    const diapatch = useDispatch();
+    const dispatch = useDispatch();
     const [onHover, setOnHover] = useState(false);
     const [cardHoverEffectStyle, setCardHoverEffectStyle] = useState({});
+    const [movieSource, setMovieSource] = useState({});
 
     useEffect(() => {
       setCardHoverEffectStyle({
@@ -40,6 +44,22 @@ const Card = React.forwardRef(
     }, [screenWidth]);
 
     useEffect(() => {
+      const getMovie = async () => {
+        if (onHover === true) {
+          try {
+            const response = await axiosClient.get(
+              `${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${trailer}`
+            );
+            if (response.data) setMovieSource(response.data);
+          } catch (error) {
+            console.log("Could not fetch the Trailer");
+          }
+        }
+      };
+      getMovie();
+    }, [onHover, trailer]);
+
+    useEffect(() => {
       if (getOnHover) getOnHover(onHover);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onHover]);
@@ -53,7 +73,7 @@ const Card = React.forwardRef(
     };
 
     const handlePlayButtonClick = () => {
-      diapatch(GLOBAL_ACTIONS.openMediaPlayerAction(trailer));
+      dispatch(GLOBAL_ACTIONS.openMediaPlayerAction(trailer));
     };
 
     return (
@@ -90,7 +110,7 @@ const Card = React.forwardRef(
               className={`card--mediacontainer--video ${
                 onHover ? "card--mediacontainer--video-show" : ""
               }`}
-              src={`http://localhost:8080/api/movies/accessLink/media/${trailer}`}
+              src={movieSource}
               autoPlay={onHover}
               loop
               type="video/mp4"

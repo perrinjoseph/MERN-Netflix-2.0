@@ -62,7 +62,7 @@ function Home() {
       dispatch(getMovieListThunk(GENRES.ALL_GENRES, 0, 40, "All Movies"));
     }
     dispatch(getRandomMovieThunk());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
