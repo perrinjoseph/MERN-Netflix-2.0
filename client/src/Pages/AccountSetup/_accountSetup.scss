@@ -3,9 +3,9 @@
   height: 100vh;
   background-color: white;
   color: $color-font-dark-800;
+  margin-bottom: 250px;
 
   &--stepper-btns {
-    margin-top: 5vh;
     width: 100%;
     align-items: center;
     justify-content: space-between;
@@ -43,7 +43,7 @@
   background-color: $color-font-dark-500;
   width: clamp(250px, 90vw, 450px);
   height: 645px;
-  margin-top: 50px;
+  margin-top: 20px;
   border-radius: 19px;
   padding: 40px;
   display: flex;
@@ -97,18 +97,18 @@
 }
 @media (max-width: 400px) {
   .stepForm-container {
-    margin-top: 200px;
+    margin-top: 280px;
     background-color: white;
     padding: 10px;
     width: 100vw;
     height: 100%;
-    min-height: 500px;
+    height: 645px;
     justify-content: space-evenly;
   }
 }
 
-@media (max-height: 850px) {
-  .account-setup--stepper-btns {
-    display: none;
-  }
-}
+// @media (max-height: 850px) {
+//   .account-setup--stepper-btns {
+//     display: none;
+//   }
+// }

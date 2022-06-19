@@ -17,32 +17,58 @@ function PersonalInformation() {
     region: "",
     tos: "",
   });
-  const { email, password, confirmPassword, region, agreement, activeStep } =
-    useSelector(
-      ({
-        signUp: {
-          data: { email, password, confirmPassword, region, agreement },
-          activeStep,
+  const {
+    email,
+    password,
+    confirmPassword,
+    region,
+    agreement,
+    activeStep,
+    personalInfoStep,
+    createAccountError,
+  } = useSelector(
+    ({
+      signUp: {
+        data: {
+          email,
+          password,
+          confirmPassword,
+          region,
+          agreement,
+          stepDetails,
         },
-      }) => ({
-        email,
-        password,
-        confirmPassword,
-        region,
-        agreement,
         activeStep,
-      })
-    );
+        error,
+      },
+    }) => ({
+      email,
+      password,
+      confirmPassword,
+      region,
+      agreement,
+      activeStep,
+      personalInfoStep: stepDetails.find((step) => step.stepId === 2),
+      createAccountError: error?.data?.error,
+    })
+  );
 
   useEffect(() => {
-    if (email && password && confirmPassword && region && agreement)
+    if (
+      email &&
+      password &&
+      confirmPassword &&
+      region &&
+      agreement &&
+      confirmPassword === password
+    ) {
       dispatch(
         signUpActions.changeStepStatus(
           stepStatus.COMPLETED,
           STEPS.PERSONAL_INFORMATION
         )
       );
-    else
+    } else if (personalInfoStep.stepStatus === stepStatus.INCOMPLETE) {
+    } else
       dispatch(signUpActions.changeStepStatus("", STEPS.PERSONAL_INFORMATION));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, confirmPassword, region, agreement]);
@@ -57,6 +83,27 @@ function PersonalInformation() {
           These credentials will be needed for all users accessing this account.
           You can always reset your password or change your user name later.
         </p>
+
+        {createAccountError && (
+          <span
+            className={`GLOBAL-errors-message ${
+              createAccountError ? "show-errormsg" : "hide--errormsg"
+            }`}
+          >
+            {createAccountError}
+          </span>
+        )}
+        {!createAccountError && (
+          <span
+            className={`GLOBAL-errors-message ${
+              personalInfoStep.stepStatus === stepStatus.INCOMPLETE
+                ? "show-errormsg"
+                : "hide--errormsg"
+            }`}
+          >
+            There are incomplete fields
+          </span>
+        )}
       </header>
       <form className="stepForm-container--form">
         <AccountSetupInputs
@@ -66,6 +113,8 @@ function PersonalInformation() {
           handleOnChange={(value) => {
             dispatch(signUpActions.changeInputField(value, "email"));
             setErrors({ ...errors, email: !value ? "Required Field" : "" });
+            if (createAccountError)
+              dispatch(signUpActions.resetCreateAccountError());
           }}
           defaultInput={email}
         />
@@ -142,9 +191,14 @@ function PersonalInformation() {
       </form>
       <footer>
         <Button
-          enabled={[email, password, confirmPassword, region, agreement].every(
-            (question) => question
-          )}
+          enabled={[
+            email,
+            password,
+            confirmPassword,
+            region,
+            agreement,
+            confirmPassword === password,
+          ].every((question) => question)}
           title="Proceed"
           type={buttonTypes.SIMPLE}
           onClick={() =>

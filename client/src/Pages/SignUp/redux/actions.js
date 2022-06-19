@@ -22,7 +22,7 @@ const changeInputField = (data, field) => ({
 
 const updateSignUpProgress = (data) => ({
   type: SIGNUP_ACTION_TYPES.UPDATE_SIGN_UP_PROGRESS,
-  payload: data,
+  payload: { data },
 });
 
 const verifyUserSignedUpStartedAction = () => ({
@@ -39,6 +39,23 @@ const verifyUserSignedUpErrorAction = (error) => ({
   payload: { error },
 });
 
+const createAccountStartedAction = () => ({
+  type: SIGNUP_ACTION_TYPES.CREATE_ACCOUNT_STARTED,
+});
+
+const createAccountErrorAction = (error) => ({
+  type: SIGNUP_ACTION_TYPES.CREATE_ACCOUNT_ERROR,
+  payload: { error },
+});
+
+const createAccountSuccessAction = () => ({
+  type: SIGNUP_ACTION_TYPES.CREATE_ACCOUNT_SUCCESS,
+});
+
+const resetCreateAccountError = () => ({
+  type: SIGNUP_ACTION_TYPES.RESET_CREATE_ACCOUT_ERROR,
+});
+
 export const signUpActions = {
   updateSignUpProgress,
   changeInputField,
@@ -48,4 +65,8 @@ export const signUpActions = {
   verifyUserSignedUpStartedAction,
   verifyUserSignedUpSuccessAction,
   verifyUserSignedUpErrorAction,
+  createAccountStartedAction,
+  createAccountErrorAction,
+  createAccountSuccessAction,
+  resetCreateAccountError,
 };

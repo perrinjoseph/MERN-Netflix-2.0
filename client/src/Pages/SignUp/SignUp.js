@@ -5,14 +5,29 @@ import Input from "../../Global/Components/Input/Input";
 import Navbar from "../../Global/Components/Navbar/Navbar";
 import { verifyUserSignedUpThunk } from "./redux/thunks";
 import { navbarTypes } from "../../Global/Components/Navbar/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { signUpStarted } = useSelector(
+    ({
+      signUp: {
+        data: { email },
+      },
+    }) => ({ signUpStarted: !!email })
+  );
+
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({ email: false });
+
+  const continueSigningUpHandler = () => {
+    if (signUpStarted) {
+      navigate("/accountsetup", { replace: true });
+    }
+  };
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const emailRegex =
@@ -25,8 +40,8 @@ function SignUp() {
             ...errors,
             email: "",
           });
-          navigate("/accountsetup");
-        } else throw new Error("An account with this email already exists.");
+          navigate("/accountsetup", { replace: true });
+        } else throw new Error("An account with this email exists.");
       } catch (error) {
         setErrors({
           ...errors,
@@ -59,22 +74,35 @@ function SignUp() {
           </h3>
           <br></br>
           <div className="signup--form--inputs">
-            <Input
-              name="email"
-              placeholder="Email"
-              invalid={errors.email}
-              errorMessage={errors.email}
-              handleOnChange={(value) => {
-                setEmail(value);
-                setErrors({
-                  ...errors,
-                  email: !value ? "Email is required to continue." : "",
-                });
-              }}
-            />
-            <div>
-              <Button onClick={handleOnSubmit} title={"Submit"}></Button>
-            </div>
+            {!signUpStarted && (
+              <Input
+                value={email}
+                name="email"
+                placeholder="Email"
+                invalid={errors.email}
+                errorMessage={errors.email}
+                handleOnChange={(value) => {
+                  setEmail(value.toLowerCase());
+                  setErrors({
+                    ...errors,
+                    email: !value ? "Email is required to continue." : "",
+                  });
+                }}
+              />
+            )}
+            {!signUpStarted && (
+              <div>
+                <Button onClick={handleOnSubmit} title={"Submit"}></Button>
+              </div>
+            )}
+            {signUpStarted && (
+              <div>
+                <Button
+                  onClick={continueSigningUpHandler}
+                  title={"Continue Sign Up"}
+                ></Button>
+              </div>
+            )}
           </div>
         </form>
       </Center>

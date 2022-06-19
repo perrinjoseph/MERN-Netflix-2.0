@@ -5,6 +5,7 @@ import { INPUT_TYPES } from "../../../Global/Constants/constant";
 //TODO:isChecked can be removed and default input can be used for all inputs.
 //Rename defaultInput to defaultValue
 function AccountSetupInputs({
+  disabled,
   type,
   placeholder,
   title,
@@ -189,6 +190,7 @@ function AccountSetupInputs({
             {title}
           </label>
           <input
+            readOnly={disabled}
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
