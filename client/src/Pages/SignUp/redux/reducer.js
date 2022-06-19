@@ -127,6 +127,10 @@ const signUpReducer = (state = defaultState, action) => {
         apiStatus: null,
         error: null,
       };
+
+    case SIGNUP_ACTION_TYPES.RESET_SIGN_UP:
+      return defaultState;
+
     default:
       return state;
   }

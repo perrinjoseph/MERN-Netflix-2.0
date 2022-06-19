@@ -56,6 +56,10 @@ const resetCreateAccountError = () => ({
   type: SIGNUP_ACTION_TYPES.RESET_CREATE_ACCOUT_ERROR,
 });
 
+const resetSignUpAction = () => ({
+  type: SIGNUP_ACTION_TYPES.RESET_SIGN_UP,
+});
+
 export const signUpActions = {
   updateSignUpProgress,
   changeInputField,
@@ -69,4 +73,5 @@ export const signUpActions = {
   createAccountErrorAction,
   createAccountSuccessAction,
   resetCreateAccountError,
+  resetSignUpAction,
 };

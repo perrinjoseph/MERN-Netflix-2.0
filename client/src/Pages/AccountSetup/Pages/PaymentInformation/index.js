@@ -37,7 +37,10 @@ function PaymentInformation() {
       dispatch(signUpActions.updateSignUpProgress(stepStatus.COMPLETED));
       const response = await dispatch(createUserAccountThunk(email, password));
       if (!response) dispatch(signUpActions.changeSignUpActiveStep(2));
-      if (response) navigate("/login", { replace: true });
+      if (response) {
+        navigate("/login", { replace: true });
+        dispatch(signUpActions.resetSignUpAction());
+      }
     } else {
       const incompleteStep = stepDetails.find(
         (step) =>
