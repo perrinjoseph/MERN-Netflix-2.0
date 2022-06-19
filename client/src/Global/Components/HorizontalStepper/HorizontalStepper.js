@@ -7,7 +7,7 @@ import Step from "./Step";
  * @param {function} getActiveStep - Will return the step that is currently in progress.
  */
 function HorizontalStepper({ stepDetails = [], getActiveStep, activeStep }) {
-  const [inProgress, setInProgress] = useState(1);
+  const [inProgress, setInProgress] = useState(activeStep);
 
   useEffect(() => {
     if (getActiveStep) getActiveStep(inProgress);

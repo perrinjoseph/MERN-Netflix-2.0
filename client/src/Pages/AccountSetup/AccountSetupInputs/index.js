@@ -5,6 +5,7 @@ import { INPUT_TYPES } from "../../../Global/Constants/constant";
 //TODO:isChecked can be removed and default input can be used for all inputs.
 //Rename defaultInput to defaultValue
 function AccountSetupInputs({
+  disabled,
   type,
   placeholder,
   title,
@@ -13,6 +14,7 @@ function AccountSetupInputs({
   isChecked,
   defaultInput,
   handleOnChange,
+  error,
 }) {
   const [checked, setChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -37,6 +39,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CREDIT_CARD_DATE:
@@ -52,6 +62,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CREDIT_CARD_NUMBER:
@@ -67,6 +85,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
     case INPUT_TYPES.CHECK_BOX:
@@ -112,6 +138,14 @@ function AccountSetupInputs({
             id={placeholder}
             type="password"
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
 
@@ -138,6 +172,14 @@ function AccountSetupInputs({
               </option>
             ))}
           </select>
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
 
@@ -148,6 +190,7 @@ function AccountSetupInputs({
             {title}
           </label>
           <input
+            readOnly={disabled}
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -157,6 +200,14 @@ function AccountSetupInputs({
             placeholder={placeholder}
             id={placeholder}
           />
+
+          <span
+            className={`GLOBAL-errors-message account-signup-errormsg hide--errormsg ${
+              error && "show--errormsg"
+            }`}
+          >
+            {error}
+          </span>
         </div>
       );
   }

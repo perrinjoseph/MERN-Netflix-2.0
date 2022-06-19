@@ -10,13 +10,17 @@ import { REGIONS, STEPS } from "../../constants";
 
 function TermsAndConditions() {
   const dispatch = useDispatch();
-  const { TAC, activeStep } = useSelector(
+  const { TAC, activeStep, TOSStep } = useSelector(
     ({
       signUp: {
-        data: { TAC },
+        data: { TAC, stepDetails },
         activeStep,
       },
-    }) => ({ TAC, activeStep })
+    }) => ({
+      TAC,
+      activeStep,
+      TOSStep: stepDetails.find((step) => step.stepId === 1),
+    })
   );
 
   const handleOnClick = (value, id) => {
@@ -31,13 +35,12 @@ function TermsAndConditions() {
           STEPS.TERMS_AND_CONDITIONS
         )
       );
-    else
-      dispatch(
-        signUpActions.changeStepStatus(
-          stepStatus.INCOMPLETE,
-          STEPS.TERMS_AND_CONDITIONS
-        )
-      );
+    else if (TOSStep.stepStatus === stepStatus.INCOMPLETE) {
+      //This step is done here to basically stop the exlse from happening
+      //because we need the step status to be incomplete and
+      //not get reset so we can show the entire page has incomplete data.
+    } else
+      dispatch(signUpActions.changeStepStatus("", STEPS.TERMS_AND_CONDITIONS));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TAC]);
 
@@ -50,6 +53,16 @@ function TermsAndConditions() {
         <div className="stepForm-container--header--subheader">
           Please read and accept our terms and conditions. This form needs to be
           completed to proceed.<br></br>
+          <span
+            className={`GLOBAL-errors-message ${
+              TOSStep.stepStatus === stepStatus.INCOMPLETE
+                ? "show-errormsg"
+                : "hide--errormsg"
+            }`}
+          >
+            There are incomplete fields
+          </span>
+          <br></br>
           <AccountSetupInputs
             type={INPUT_TYPES.CHECK_BOX}
             title={

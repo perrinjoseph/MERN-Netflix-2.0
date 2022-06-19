@@ -1,27 +1,60 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../../Global/Components/Button/Button";
 import { buttonTypes } from "../../../../Global/Components/Button/constants";
 import { stepStatus } from "../../../../Global/Components/HorizontalStepper/constant";
 import { INPUT_TYPES } from "../../../../Global/Constants/constant";
 import { signUpActions } from "../../../SignUp/redux/actions";
+import { createUserAccountThunk } from "../../../SignUp/redux/thunks";
 import AccountSetupInputs from "../../AccountSetupInputs";
 import { STEPS } from "../../constants";
 
 function PaymentInformation() {
   const dispatch = useDispatch();
-  const { zipCode, state, address, stepDetails } = useSelector(
+  const navigate = useNavigate();
+  const { zipCode, state, address, stepDetails, email, password } = useSelector(
     ({
       signUp: {
-        data: { zipCode, state, address, stepDetails },
+        data: { zipCode, state, address, stepDetails, email, password },
+        apiStatus,
+        error,
       },
-    }) => ({ zipCode, state, address, stepDetails })
+    }) => ({
+      zipCode,
+      state,
+      address,
+      stepDetails,
+      apiStatus,
+      email,
+      password,
+      error: error?.data?.error,
+    })
   );
 
-  const handlePayButtonClick = () => {
-    if (stepDetails.every((step) => step.stepStatus === stepStatus.COMPLETED))
+  const handlePayButtonClick = async () => {
+    if (stepDetails.every((step) => step.stepStatus === stepStatus.COMPLETED)) {
       dispatch(signUpActions.updateSignUpProgress(stepStatus.COMPLETED));
-    else dispatch(signUpActions.updateSignUpProgress(stepStatus.INCOMPLETE));
+      const response = await dispatch(createUserAccountThunk(email, password));
+      if (!response) dispatch(signUpActions.changeSignUpActiveStep(2));
+      if (response) {
+        navigate("/login", { replace: true });
+        dispatch(signUpActions.resetSignUpAction());
+      }
+    } else {
+      const incompleteStep = stepDetails.find(
+        (step) =>
+          step.stepStatus === stepStatus.INCOMPLETE || step.stepStatus === ""
+      );
+      dispatch(
+        signUpActions.changeStepStatus(
+          stepStatus.INCOMPLETE,
+          incompleteStep.stepTitle
+        )
+      );
+      dispatch(signUpActions.changeSignUpActiveStep(incompleteStep.stepId));
+      dispatch(signUpActions.updateSignUpProgress(stepStatus.INCOMPLETE));
+    }
   };
 
   useEffect(() => {
@@ -45,8 +78,9 @@ function PaymentInformation() {
         </h3>
         <p className="stepForm-container--header--subheader">
           For your security all field have been prefilled with mock data and
-          will be un-editable. Entering real payment details may result in a
+          will be disabled. Entering real payment details may result in a
           charge.
+          <br />
         </p>
       </header>
       <form className="stepForm-container--form">
@@ -72,6 +106,7 @@ function PaymentInformation() {
           </div>
         </section>
         <AccountSetupInputs
+          disabled={true}
           placeholder="Address"
           title="Address"
           defaultInput={address}
@@ -82,6 +117,7 @@ function PaymentInformation() {
         <section className="stepForm-container--form--row">
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
+              disabled={true}
               placeholder="Zip Code"
               title="Zip Code"
               defaultInput={zipCode}
@@ -92,6 +128,7 @@ function PaymentInformation() {
           </div>
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
+              disabled={true}
               placeholder="State"
               title="State"
               defaultInput={state}

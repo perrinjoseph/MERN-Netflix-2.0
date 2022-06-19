@@ -1,12 +1,11 @@
 .account-setup {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-color: white;
   color: $color-font-dark-800;
-  padding-top: 60px;
+  margin-bottom: 250px;
 
   &--stepper-btns {
-    margin-top: 5vh;
     width: 100%;
     align-items: center;
     justify-content: space-between;
@@ -25,12 +24,26 @@
     }
   }
 }
+.account-signup-errormsg {
+  height: 20px;
+  width: 100%;
+  margin-top: -5px !important;
+  margin-left: 5px !important;
+}
+
+.hide--errormsg {
+  opacity: 0;
+}
+
+.show--errormsg {
+  opacity: 1;
+}
 
 .stepForm-container {
   background-color: $color-font-dark-500;
   width: clamp(250px, 90vw, 450px);
-  height: 575px;
-  margin-top: 50px;
+  height: 645px;
+  margin-top: 20px;
   border-radius: 19px;
   padding: 40px;
   display: flex;
@@ -84,12 +97,18 @@
 }
 @media (max-width: 400px) {
   .stepForm-container {
-    margin-top: 200px;
+    margin-top: 280px;
     background-color: white;
     padding: 10px;
     width: 100vw;
     height: 100%;
-    min-height: 500px;
+    height: 645px;
     justify-content: space-evenly;
   }
 }
+
+// @media (max-height: 850px) {
+//   .account-setup--stepper-btns {
+//     display: none;
+//   }
+// }

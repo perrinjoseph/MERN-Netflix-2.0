@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { INPUT_TYPES } from "../../../../Global/Constants/constant";
 import { REGIONS, STEPS } from "../../constants";
 import AccountSetupInputs from "../../AccountSetupInputs";
@@ -10,32 +10,65 @@ import { stepStatus } from "../../../../Global/Components/HorizontalStepper/cons
 
 function PersonalInformation() {
   const dispatch = useDispatch();
-  const { email, password, confirmPassword, region, agreement, activeStep } =
-    useSelector(
-      ({
-        signUp: {
-          data: { email, password, confirmPassword, region, agreement },
-          activeStep,
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    region: "",
+    tos: "",
+  });
+  const {
+    email,
+    password,
+    confirmPassword,
+    region,
+    agreement,
+    activeStep,
+    personalInfoStep,
+    createAccountError,
+  } = useSelector(
+    ({
+      signUp: {
+        data: {
+          email,
+          password,
+          confirmPassword,
+          region,
+          agreement,
+          stepDetails,
         },
-      }) => ({
-        email,
-        password,
-        confirmPassword,
-        region,
-        agreement,
         activeStep,
-      })
-    );
+        error,
+      },
+    }) => ({
+      email,
+      password,
+      confirmPassword,
+      region,
+      agreement,
+      activeStep,
+      personalInfoStep: stepDetails.find((step) => step.stepId === 2),
+      createAccountError: error?.data?.error,
+    })
+  );
 
   useEffect(() => {
-    if (email && password && confirmPassword && region && agreement)
+    if (
+      email &&
+      password &&
+      confirmPassword &&
+      region &&
+      agreement &&
+      confirmPassword === password
+    ) {
       dispatch(
         signUpActions.changeStepStatus(
           stepStatus.COMPLETED,
           STEPS.PERSONAL_INFORMATION
         )
       );
-    else
+    } else if (personalInfoStep.stepStatus === stepStatus.INCOMPLETE) {
+    } else
       dispatch(signUpActions.changeStepStatus("", STEPS.PERSONAL_INFORMATION));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, confirmPassword, region, agreement]);
@@ -50,22 +83,52 @@ function PersonalInformation() {
           These credentials will be needed for all users accessing this account.
           You can always reset your password or change your user name later.
         </p>
+
+        {createAccountError && (
+          <span
+            className={`GLOBAL-errors-message ${
+              createAccountError ? "show-errormsg" : "hide--errormsg"
+            }`}
+          >
+            {createAccountError}
+          </span>
+        )}
+        {!createAccountError && (
+          <span
+            className={`GLOBAL-errors-message ${
+              personalInfoStep.stepStatus === stepStatus.INCOMPLETE
+                ? "show-errormsg"
+                : "hide--errormsg"
+            }`}
+          >
+            There are incomplete fields
+          </span>
+        )}
       </header>
       <form className="stepForm-container--form">
         <AccountSetupInputs
+          error={errors.email}
           placeholder="Email"
           title="Email"
-          handleOnChange={(value) =>
-            dispatch(signUpActions.changeInputField(value, "email"))
-          }
+          handleOnChange={(value) => {
+            dispatch(signUpActions.changeInputField(value, "email"));
+            setErrors({ ...errors, email: !value ? "Required Field" : "" });
+            if (createAccountError)
+              dispatch(signUpActions.resetCreateAccountError());
+          }}
           defaultInput={email}
         />
         <section className="stepForm-container--form--row">
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
-              handleOnChange={(value) =>
-                dispatch(signUpActions.changeInputField(value, "password"))
-              }
+              error={errors.password}
+              handleOnChange={(value) => {
+                dispatch(signUpActions.changeInputField(value, "password"));
+                setErrors({
+                  ...errors,
+                  password: !value ? "Required Field" : "",
+                });
+              }}
               defaultInput={password}
               placeholder="Password"
               title="Password"
@@ -74,11 +137,20 @@ function PersonalInformation() {
           </div>
           <div className="stepForm-container--form--col">
             <AccountSetupInputs
-              handleOnChange={(value) =>
+              error={errors.confirmPassword}
+              handleOnChange={(value) => {
                 dispatch(
                   signUpActions.changeInputField(value, "confirmPassword")
-                )
-              }
+                );
+                setErrors({
+                  ...errors,
+                  confirmPassword: !value
+                    ? "Required Field"
+                    : value === password
+                    ? ""
+                    : "Password must match",
+                });
+              }}
               defaultInput={confirmPassword}
               placeholder="Confirm Password"
               title="Confirm Password"
@@ -119,9 +191,14 @@ function PersonalInformation() {
       </form>
       <footer>
         <Button
-          enabled={[email, password, confirmPassword, region, agreement].every(
-            (question) => question
-          )}
+          enabled={[
+            email,
+            password,
+            confirmPassword,
+            region,
+            agreement,
+            confirmPassword === password,
+          ].every((question) => question)}
           title="Proceed"
           type={buttonTypes.SIMPLE}
           onClick={() =>

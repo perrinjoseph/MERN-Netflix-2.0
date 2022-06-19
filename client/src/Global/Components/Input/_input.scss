@@ -33,6 +33,9 @@
     margin-bottom: 20px;
   }
   .input--error-message {
-    display: none;
+    bottom: -80px;
   }
+}
+
+@media (max-width: 400px) {
 }

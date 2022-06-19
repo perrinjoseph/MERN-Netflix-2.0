@@ -1,7 +1,13 @@
 import React from "react";
 import { FiAlertCircle } from "react-icons/fi";
 
-const Input = ({ placeholder, invalid, handleOnChange, ...props }) => {
+const Input = ({
+  placeholder,
+  invalid,
+  handleOnChange,
+  errorMessage,
+  ...props
+}) => {
   return (
     <div className="input">
       <input
@@ -11,11 +17,7 @@ const Input = ({ placeholder, invalid, handleOnChange, ...props }) => {
         {...props}
       ></input>
       {invalid && <FiAlertCircle className="warningIcon" size={"22px"} />}
-      {invalid && (
-        <span className="input--error-message">
-          Email is required to continue
-        </span>
-      )}
+      {invalid && <div className="input--error-message">{errorMessage}</div>}
     </div>
   );
 };

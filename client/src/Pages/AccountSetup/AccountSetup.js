@@ -36,6 +36,7 @@ function AccountSetup() {
   };
 
   useEffect(() => {
+    dispatch(signUpActions.resetCreateAccountError());
     const bodyTag = document.getElementsByTagName("body")[0];
     bodyTag.style.backgroundColor = colors.light.bgColor;
     return () => (bodyTag.style.backgroundColor = colors.dark.bgColor);

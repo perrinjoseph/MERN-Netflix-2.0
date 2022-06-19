@@ -102,10 +102,30 @@ const getUserStatsControleer = async (req, res) => {
   }
 };
 
+const findIfUserIsSignedUp = async (req, res) => {
+  const { email } = req.body;
+  if (!email)
+    return res.status(400).json({
+      error: "Please provide your email.",
+    });
+  try {
+    const response = await userModel.find({ email });
+    console.log(response);
+    if (response.length === 1)
+      return res.status(400).json({ error: "User already exists." });
+    else res.status(200).json({ message: "Success" });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "Oppse! Somthing went wrong. Please try again later." });
+  }
+};
+
 module.exports = {
   updateUserController,
   findUserController,
   deleteUserController,
   findAllUsersController,
   getUserStatsControleer,
+  findIfUserIsSignedUp,
 };
