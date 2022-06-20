@@ -15,8 +15,6 @@ const createMovieController = async (req, res) => {
         thumbnailImage: fileExists("thumbnailImage"),
         bannerImage: fileExists("bannerImage"),
         titleImage: fileExists("titleImage"),
-        video: fileExists("video"),
-        trailer: fileExists("trailer"),
       });
       const response = await newMovie.save();
       res.status(201).json(response._doc);
@@ -241,6 +239,36 @@ const deleteFileController = (req, res) => {
   }
 };
 
+const handleVideoFiles = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.query;
+  const path = req.file?.path;
+  console.log(path, type, id);
+  const mimetype = req.file?.mimetype;
+  if (req.user.isAdmin) {
+    if (mimetype !== "video/mp4" || !mimetype || !path)
+      return res.status(400).json({
+        error: "The video files were in the wrong format. We only accept .mp4",
+      });
+    try {
+      const response = await movieModel.findByIdAndUpdate(
+        mongoose.Types.ObjectId(id),
+        { $set: { [type]: path } },
+        { new: true }
+      );
+      if (response) res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(400)
+        .json({ error: "Could not save files successfully.", err });
+    }
+  } else
+    res
+      .status(400)
+      .json({ error: "Only admins can create and update movies." });
+};
+
 module.exports = {
   createMovieController,
   updateMovieController,
@@ -250,4 +278,5 @@ module.exports = {
   getMediaAccessLink,
   findMovieList,
   deleteFileController,
+  handleVideoFiles,
 };

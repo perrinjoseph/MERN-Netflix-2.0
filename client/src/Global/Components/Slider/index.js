@@ -88,7 +88,7 @@ function Slider({ title, list = [], isLoading }) {
                 title={movie.title}
                 watched={movie.watched}
                 duration={movie.duration}
-                trailer={movie.trailer.filename}
+                trailer={movie.trailer?.filename}
                 ref={cardRef}
               />
             ))}

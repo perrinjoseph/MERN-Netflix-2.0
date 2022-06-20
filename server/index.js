@@ -14,7 +14,6 @@ const app = express();
 //middleware
 //this is needed to get api calls from a different server and credentials is needed because we want to send cookies back to the server which is the credentials.
 //origin means that we can send api requests from anything with this origin.
-
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieParser());
 app.use(express.json());

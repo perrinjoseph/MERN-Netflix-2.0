@@ -7,9 +7,9 @@ const {
   getMediaAccessLink,
   findMovieList,
   deleteFileController,
+  handleVideoFiles,
 } = require("../controllers/movies.js");
 const verifyToken = require("../middleware/verifyToken.js");
-const { route } = require("./routerConfig.js");
 const router = require("./routerConfig.js");
 
 require("../config/config.js").then(({ upload }) => {
@@ -21,8 +21,6 @@ require("../config/config.js").then(({ upload }) => {
         { name: "thumbnailImage", maxCount: 1 },
         { name: "bannerImage", maxCount: 1 },
         { name: "titleImage", maxCount: 1 },
-        { name: "video", maxCount: 1 },
-        { name: "trailer", maxCount: 1 },
       ]),
     ],
     createMovieController
@@ -35,5 +33,12 @@ router.post("/search/genre/skip/limit/", verifyToken, findMovieList);
 router.get("/random/banner", verifyToken, getRandomMovie);
 router.get("/accessLink/media/:filename", verifyToken, getMediaAccessLink);
 router.delete("/delete/file/:id", verifyToken, deleteFileController);
+require("../config/config.js").then(({ uploadVideos }) => {
+  router.put(
+    "/upload/videos/:id",
+    [verifyToken, uploadVideos.single("video")],
+    handleVideoFiles
+  );
+});
 
 module.exports = router;
