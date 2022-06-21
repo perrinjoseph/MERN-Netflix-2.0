@@ -33,6 +33,10 @@ router.post("/search/genre/skip/limit/", verifyToken, findMovieList);
 router.get("/random/banner", verifyToken, getRandomMovie);
 router.get("/accessLink/media/:filename", verifyToken, getMediaAccessLink);
 router.delete("/delete/file/:id", verifyToken, deleteFileController);
+/**
+ * params: id
+ * Query params: type= video || trailer
+ */
 require("../config/config.js").then(({ uploadVideos }) => {
   router.put(
     "/upload/videos/:id",

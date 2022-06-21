@@ -1,5 +1,6 @@
 const movieModel = require("../models/movie.js");
 const { default: mongoose } = require("mongoose");
+const fs = require("fs");
 
 const createMovieController = async (req, res) => {
   const fileExists = (pathname) => {
@@ -78,7 +79,22 @@ const deleteMovieController = async (req, res) => {
                         reject(
                           `An error eccurred when deleting the*${filename}*${fileDeletionErr.message}`
                         );
-                      } else resolve();
+                      } else {
+                        const { video } = response;
+                        const { trailer } = response;
+
+                        const videoExists = fs.existsSync(video);
+                        const trailerExists = fs.existsSync(trailer);
+
+                        if (videoExists) {
+                          console.log("I deleted the video");
+                          fs.unlinkSync(video);
+                        }
+                        if (trailerExists) {
+                          fs.unlinkSync(trailer);
+                        }
+                        resolve();
+                      }
                     }
                   );
                 });
@@ -155,45 +171,71 @@ const getRandomMovie = async (req, res) => {
 
 const getMediaAccessLink = async (req, res) => {
   const filename = req.params.filename;
-  if (!filename) {
-    res.status(400).json({ error: "Please provide a file name" });
-  }
-  require("../config/config.js").then(({ gfs }) => {
-    gfs.find({ filename }).toArray((err, files) => {
-      if (files.length === 0) {
-        return res.status(400).json({
-          error: "The thumbnail is not available in the file storage.",
-          err,
-        });
-      }
-      if (
-        files[0].contentType === "image/png" ||
-        files[0].contentType === "image/jpeg"
-      ) {
-        gfs.openDownloadStreamByName(filename).pipe(res);
-      } else if (files[0].contentType === "video/mp4") {
-        const range = req.headers.range;
-        const videoSize = files[0].length;
-        const chunkSize = 10 ** 10;
-        const start = Number(range?.replace(/\D/g, "") || 0);
-        const end = Math.min(start + chunkSize, videoSize - 1);
-        const contentLength = end - start + 1;
-        const headers = {
-          "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-          "Accept-Ranges": "bytes",
-          "Content-Length": contentLength,
-          "Content-Type": "video/mp4",
-        };
-        res.writeHead(206, headers);
-        gfs.openDownloadStreamByName(filename).pipe(res);
-      } else {
-        res.status(400).json({
-          error:
-            "Found the file, but the file is not of the format that we accept to show in the browser",
-        });
-      }
+  const type = req.query?.type;
+  if (type !== "video" && type !== "trailer") {
+    console.log(type);
+    if (!filename) {
+      res.status(400).json({ error: "Please provide a file name" });
+    }
+    require("../config/config.js").then(({ gfs }) => {
+      gfs.find({ filename }).toArray((err, files) => {
+        if (files.length === 0) {
+          return res.status(400).json({
+            error: "The thumbnail is not available in the file storage.",
+            err,
+          });
+        }
+        if (
+          files[0].contentType === "image/png" ||
+          files[0].contentType === "image/jpeg"
+        ) {
+          gfs.openDownloadStreamByName(filename).pipe(res);
+        } else {
+          res.status(400).json({
+            error:
+              "Found the file, but the file is not of the format that we accept to show in the browser",
+          });
+        }
+      });
     });
-  });
+  } else {
+    const { path } = req.query;
+    if (!path || path === "undefined")
+      return res.status(400).json({
+        error: "Path needs to be provided in the query to fetch a movie",
+      });
+    const pathExists = fs.existsSync(path);
+    if (!pathExists) {
+      return res.status(400).json({
+        error: "There is no such movie or traler path in the storage.",
+      });
+    }
+    const stat = fs.statSync(path);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+    if (range) {
+      const parts = range.replace(/bytes=/, "").split("-");
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1; // no idea why filesize -1
+      const chunksize = end - start + 1;
+      const file = fs.createReadStream(path, { start, end });
+      const head = {
+        "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": chunksize,
+        "Content-Type": "video/mp4",
+      };
+      res.writeHead(206, head);
+      file.pipe(res);
+    } else {
+      const head = {
+        "Content-Length": fileSize,
+        "Content-Type": "video/mp4",
+      };
+      res.writeHead(200, head);
+      fs.createReadStream(path).pipe(res);
+    }
+  }
 };
 
 const findMovieList = async (req, res) => {

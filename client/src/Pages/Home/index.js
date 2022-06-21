@@ -95,6 +95,7 @@ function Home() {
           <div className="home--content--info--description home--content-mobile--container--desc">
             {bannerMovie.data?.description}
           </div>
+          
           <div className="home--content--info--buttons">
             <div className="home--content--info--buttons--btn">
               <Button title="Play" type={buttonTypes.PRIMARY} />

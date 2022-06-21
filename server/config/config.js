@@ -50,17 +50,21 @@ module.exports = (async function () {
     destination: (req, file, cb) => {
       console.log("CORRECT STORAGE ENGINE INVOKED");
       const { type } = req.query;
-      const { id } = req.params;
-      const { filepath } = req.query;
+      const { path } = req.query;
       if (
         (file.mimetype === "video/mp4" && type === "trailer") ||
         type === "video"
       ) {
-        const exists = fs.existsSync(filepath);
-        if (exists) {
-          fs.unlinkSync(filepath);
+        if (req.user.isAdmin) {
+          const exists = fs.existsSync(path);
+          if (exists) {
+            fs.unlinkSync(path);
+          }
+          cb(null, "videos");
+        } else {
+          console.log("Only admins can update videos files");
+          cb(null, false);
         }
-        cb(null, "videos");
       } else cb(null, false);
     },
     filename: (_req, _file, cb) => {
@@ -71,7 +75,7 @@ module.exports = (async function () {
   const uploadVideos = multer({
     storage: videoStorage,
     limits: {
-      fileSize: 1024 * 1024 * 20, // 20 MB (max file size)
+      fileSize: 1024 * 1024 * 25, // 20 MB (max file size)
     },
   });
 
