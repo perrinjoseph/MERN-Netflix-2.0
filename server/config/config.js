@@ -3,46 +3,9 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const fs = require("fs");
 
 dotenv.config();
-
-// try {
-//   db = mongoose.connect(process.env.MONGO_URI).then((db) => {
-//     gfs = new mongoose.mongo.GridFSBucket(db.connection, {
-//       bucketName: "mediaBucket",
-//     });
-//     console.log(
-//       "🟢 MongoDB data base connected. If you want to access the database you can get it through db from this cofig file."
-//     );
-//   });
-// } catch (error) {
-//   console.log(`🔴 Failed to connect to MongoDB ${error}`);
-// }
-
-// const storageEngine = new GridFsStorage({
-//   url: process.env.MONGO_URI,
-//   file: (_req, file) => {
-//     return new Promise((resolve, reject) => {
-//       if (
-//         file.mimetype === "image/jpeg" ||
-//         file.mimetype === "image/png" ||
-//         file.mimetype === "video/mp4"
-//       )
-//         resolve({
-//           filename: Crypto.lib.WordArray.random(128 / 8).toString(),
-//           bucketName: "mediaBucket",
-//         });
-
-//       reject(
-//         "File is not in the correct format. You can only upload image/jpeg, image/png, video/mp4"
-//       );
-//     });
-//   },
-// });
-
-// const upload = multer({ storage: storageEngine });
-// module.exports = { upload, storageEngine, gfs };
-
 module.exports = (async function () {
   let gfs;
   let db;
@@ -62,22 +25,59 @@ module.exports = (async function () {
     url: process.env.MONGO_URI,
     file: (_req, file) => {
       return new Promise((resolve, reject) => {
-        if (
-          file.mimetype === "image/jpeg" ||
-          file.mimetype === "image/png" ||
-          file.mimetype === "video/mp4"
-        )
+        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png")
           resolve({
             filename: Crypto.lib.WordArray.random(128 / 8).toString(),
             bucketName: "mediaBucket",
           });
 
         reject(
-          "File is not in the correct format. You can only upload image/jpeg, image/png, video/mp4"
+          "File is not in the correct format. You can only upload image/jpeg, image/png"
         );
       });
     },
   });
-  const upload = multer({ storage: storageEngine });
-  return { upload, gfs, db, storageEngine };
+  const upload = multer({
+    storage: storageEngine,
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype === "image/jpeg" || file.mimetype === "image/png")
+        cb(null, true);
+      else cb(null, false);
+    },
+  });
+
+  const videoStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      console.log("CORRECT STORAGE ENGINE INVOKED");
+      const { type } = req.query;
+      const { path } = req.query;
+      if (
+        (file.mimetype === "video/mp4" && type === "trailer") ||
+        type === "video"
+      ) {
+        if (req.user.isAdmin) {
+          const exists = fs.existsSync(path);
+          if (exists) {
+            fs.unlinkSync(path);
+          }
+          cb(null, "videos");
+        } else {
+          console.log("Only admins can update videos files");
+          cb(null, false);
+        }
+      } else cb(null, false);
+    },
+    filename: (_req, _file, cb) => {
+      cb(null, Crypto.lib.WordArray.random(128 / 8).toString() + ".mp4");
+    },
+  });
+
+  const uploadVideos = multer({
+    storage: videoStorage,
+    limits: {
+      fileSize: 1024 * 1024 * 25, // 20 MB (max file size)
+    },
+  });
+
+  return { upload, gfs, db, storageEngine, uploadVideos };
 })();

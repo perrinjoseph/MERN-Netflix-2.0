@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import addButton from "../../Assets/addbutton.svg";
 import playButton from "../../Assets/playbutton.svg";
 import thumbsUpButton from "../../Assets/thumbsup.svg";
@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
 import axiosClient from "../../Api/axiosConfig";
 import API_ENDPOINTS from "../../Api/api-endpoints";
-import { logoutUserThunk } from "../../Redux/thunks";
 
 const Card = React.forwardRef(
   (
@@ -27,8 +26,7 @@ const Card = React.forwardRef(
     const dispatch = useDispatch();
     const [onHover, setOnHover] = useState(false);
     const [cardHoverEffectStyle, setCardHoverEffectStyle] = useState({});
-    const [movieSource, setMovieSource] = useState({});
-
+    const videoRef = createRef();
     useEffect(() => {
       setCardHoverEffectStyle({
         transitionDelay: "0.5s",
@@ -44,15 +42,16 @@ const Card = React.forwardRef(
     }, [screenWidth]);
 
     useEffect(() => {
+      if (!onHover && videoRef.current) videoRef.current.currentTime = 0;
       const getMovie = async () => {
         if (onHover === true) {
           try {
             const response = await axiosClient.get(
-              `${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${trailer}`
+              `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
             );
-            if (response.data) setMovieSource(response.data);
+            console.log(response);
           } catch (error) {
-            console.log("Could not fetch the Trailer");
+            console.log("Could not fetch the Trailer", error);
           }
         }
       };
@@ -106,11 +105,16 @@ const Card = React.forwardRef(
 
           {onHover && screenWidth >= 825 && (
             <video
+              ref={videoRef}
               poster={`http://localhost:8080/api/movies/accessLink/media/${img}`}
               className={`card--mediacontainer--video ${
                 onHover ? "card--mediacontainer--video-show" : ""
               }`}
-              src={movieSource}
+              src={`${
+                onHover
+                  ? `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
+                  : ""
+              }`}
               autoPlay={onHover}
               loop
               type="video/mp4"
