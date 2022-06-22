@@ -2,12 +2,11 @@ import React, { createRef, useEffect, useState } from "react";
 import addButton from "../../Assets/addbutton.svg";
 import playButton from "../../Assets/playbutton.svg";
 import thumbsUpButton from "../../Assets/thumbsup.svg";
-import downButton from "../../Assets/down.svg";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
 import axiosClient from "../../Api/axiosConfig";
-import API_ENDPOINTS from "../../Api/api-endpoints";
+import { CgMoreO } from "react-icons/cg";
 
 const Card = React.forwardRef(
   (
@@ -27,6 +26,11 @@ const Card = React.forwardRef(
     const [onHover, setOnHover] = useState(false);
     const [cardHoverEffectStyle, setCardHoverEffectStyle] = useState({});
     const videoRef = createRef();
+    const [extend, setExtend] = useState(false);
+    const extendStyle = {
+      zIndex: "2",
+      boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    };
     useEffect(() => {
       setCardHoverEffectStyle({
         transitionDelay: "0.5s",
@@ -46,10 +50,9 @@ const Card = React.forwardRef(
       const getMovie = async () => {
         if (onHover === true) {
           try {
-            const response = await axiosClient.get(
+            await axiosClient.get(
               `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
             );
-            console.log(response);
           } catch (error) {
             console.log("Could not fetch the Trailer", error);
           }
@@ -78,7 +81,7 @@ const Card = React.forwardRef(
     return (
       <div
         className="card"
-        style={onHover ? cardHoverEffectStyle : {}}
+        style={onHover ? (extend ? extendStyle : cardHoverEffectStyle) : {}}
         ref={ref}
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseLeave}
@@ -104,21 +107,23 @@ const Card = React.forwardRef(
           ></img>
 
           {onHover && screenWidth >= 825 && (
-            <video
-              ref={videoRef}
-              poster={`http://localhost:8080/api/movies/accessLink/media/${img}`}
-              className={`card--mediacontainer--video ${
-                onHover ? "card--mediacontainer--video-show" : ""
-              }`}
-              src={`${
-                onHover
-                  ? `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
-                  : ""
-              }`}
-              autoPlay={onHover}
-              loop
-              type="video/mp4"
-            ></video>
+            <div className="card--mediacontainer--popout">
+              <video
+                ref={videoRef}
+                poster={`http://localhost:8080/api/movies/accessLink/media/${img}`}
+                className={`card--mediacontainer--video ${
+                  onHover ? "card--mediacontainer--video-show" : ""
+                }`}
+                src={`${
+                  onHover
+                    ? `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
+                    : ""
+                }`}
+                autoPlay={onHover}
+                loop
+                type="video/mp4"
+              ></video>
+            </div>
           )}
         </div>
 
@@ -143,11 +148,13 @@ const Card = React.forwardRef(
                   <img src={thumbsUpButton} alt="like button"></img>
                 </button>
               </div>
-              <div className="card--desc--buttons--row">
-                <button className="card--desc--buttons--btn">
-                  <img src={downButton} alt="like button"></img>
-                </button>
-              </div>
+              <CgMoreO
+                onClick={() => {
+                  setExtend((extend) => !extend);
+                }}
+                className="card--desc--buttons--btn"
+                size={23}
+              />
             </div>
 
             <span className="card--desc--title">{title}</span>

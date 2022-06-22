@@ -12,6 +12,7 @@ import SliderLoading from "../../Global/Components/Slider/SliderLoading/SliderLo
 import { API_STATUS } from "../../Global/Api/constants";
 import useElementOnScreen from "../../Global/Hooks/useElementOnScreen";
 import { SLIDER_CATEGORIES_FOR_HOME_PAGE } from "../../Global/Components/Slider/constants";
+import MovieInformation from "../../Global/Components/MovieInformation";
 
 /*
 This is done to create a closure here. because the call back 
@@ -67,6 +68,7 @@ function Home() {
 
   return (
     <main className="home">
+      <MovieInformation />
       <header className="home--header">
         <div className={`home--header--banner--preloader `}>
           <img
@@ -95,7 +97,7 @@ function Home() {
           <div className="home--content--info--description home--content-mobile--container--desc">
             {bannerMovie.data?.description}
           </div>
-          
+
           <div className="home--content--info--buttons">
             <div className="home--content--info--buttons--btn">
               <Button title="Play" type={buttonTypes.PRIMARY} />
