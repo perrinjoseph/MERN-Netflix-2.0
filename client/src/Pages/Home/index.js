@@ -20,16 +20,18 @@ function "observerHandler" will remember its lexical scope
 */
 let slidersLength;
 function Home() {
-  const { sliders, apiStatus, bannerMovie } = useSelector(
+  const { sliders, apiStatus, bannerMovie, open } = useSelector(
     ({
       homeScreen: {
         data: { sliders, bannerMovie },
         apiStatus,
       },
+      movieMoreInfo: { open },
     }) => ({
       sliders,
       apiStatus,
       bannerMovie,
+      open,
     })
   );
   slidersLength = sliders?.length;
@@ -68,7 +70,7 @@ function Home() {
 
   return (
     <main className="home">
-      <MovieInformation />
+      {open && <MovieInformation />}
       <header className="home--header">
         <div className={`home--header--banner--preloader `}>
           <img

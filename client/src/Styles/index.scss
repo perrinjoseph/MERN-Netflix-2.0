@@ -22,3 +22,7 @@
 .GLOBAL--pause-animation {
   animation-play-state: paused;
 }
+
+.GLOBAL--dark-text {
+  color: $color-font-dark-800;
+}

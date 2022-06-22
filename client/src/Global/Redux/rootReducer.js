@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import homeScreenReducer from "../../Pages/Home/redux/reducer";
 import signUpReducer from "../../Pages/SignUp/redux/reducer";
 import { API_STATUS } from "../Api/constants";
+import moreInformationReducer from "../Components/MovieInformation/redux/reducer";
 import GLOBAL_ACTIONS_TYPES from "./types";
 
 /*
@@ -106,4 +107,5 @@ export default combineReducers({
   signUp: signUpReducer,
   mediaPlayer: mediaPlayerReducer,
   homeScreen: homeScreenReducer,
+  movieMoreInfo: moreInformationReducer,
 });

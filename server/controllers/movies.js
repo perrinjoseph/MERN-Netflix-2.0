@@ -204,8 +204,8 @@ const getMediaAccessLink = async (req, res) => {
       return res.status(400).json({
         error: "Path needs to be provided in the query to fetch a movie",
       });
-    // console.log();
-    // console.log("file exists?", fs.existsSync());
+    //for somereason path with \ did not work in mac so
+    //I changed it to / and it worked both in mac and windows...
     const newPath = path.replace("\\", "/");
     const pathExists = fs.existsSync(newPath);
     if (!pathExists) {

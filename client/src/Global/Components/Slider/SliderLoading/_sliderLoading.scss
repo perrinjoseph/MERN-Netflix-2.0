@@ -55,6 +55,11 @@
     animation-direction: alternate;
     animation-delay: 0.4s;
   }
+  &6 {
+    animation: loadingSlider 0.5s infinite;
+    animation-direction: alternate;
+    animation-delay: 0.5s;
+  }
 }
 @keyframes loadingSlider {
   100% {

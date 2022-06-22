@@ -90,6 +90,7 @@ function Slider({ title, list = [], isLoading }) {
                 duration={movie.duration}
                 trailer={movie.trailer}
                 ref={cardRef}
+                movie={movie}
               />
             ))}
           </div>

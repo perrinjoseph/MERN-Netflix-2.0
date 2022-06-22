@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
 import axiosClient from "../../Api/axiosConfig";
 import { CgMoreO } from "react-icons/cg";
+import MOVIE_INFORMATION_ACTIONS from "../MovieInformation/redux/actions";
 
 const Card = React.forwardRef(
   (
     {
+      movie,
       img,
       title = "The Movie",
       watched,
@@ -66,6 +68,17 @@ const Card = React.forwardRef(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onHover]);
 
+    useEffect(() => {
+      if (extend === true) {
+        dispatch(MOVIE_INFORMATION_ACTIONS.setMoreInfoMovieAction(movie));
+        dispatch(MOVIE_INFORMATION_ACTIONS.openMoreInfoAction());
+        setExtend(false);
+        setOnHover(false);
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [extend]);
+
     const handleOnMouseEnter = () => {
       if (screenWidth >= 825) setOnHover(true);
     };
@@ -91,6 +104,12 @@ const Card = React.forwardRef(
             <FiMoreHorizontal
               className="card--mediacontainer--mobileDesc--btn--mobileIcon"
               size={28}
+              onClick={() => {
+                dispatch(
+                  MOVIE_INFORMATION_ACTIONS.setMoreInfoMovieAction(movie)
+                );
+                dispatch(MOVIE_INFORMATION_ACTIONS.openMoreInfoAction());
+              }}
             />
           </button>
         </section>
