@@ -1,5 +1,5 @@
 .movieInformation-backdrop {
-    padding: 10vh 0px;
+  padding: 10vh 0px;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -15,7 +15,7 @@
   transform: translate(-50%);
   width: 50%;
   height: 100vh;
-  background: orange;
+  background: $color-dark-bg-color;
   z-index: 100;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
