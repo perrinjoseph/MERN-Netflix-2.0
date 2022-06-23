@@ -2,8 +2,6 @@ import { nanoid } from "nanoid";
 import axiosClient from "../../../Global/Api/axiosConfig";
 import API_ENDPOINTS from "../../../Global/Api/api-endpoints";
 import HOME_SCREEN_ACTIONS from "./actions";
-import { SLIDER_CATEGORIES_FOR_HOME_PAGE } from "../../../Global/Components/Slider/constants";
-import { GENRES } from "../../../Global/Constants/constant";
 
 export const getMovieListThunk =
   (genre, skip, limit, title) => async (dispatch, getState) => {

@@ -204,13 +204,16 @@ const getMediaAccessLink = async (req, res) => {
       return res.status(400).json({
         error: "Path needs to be provided in the query to fetch a movie",
       });
-    const pathExists = fs.existsSync(path);
+    //for somereason path with \ did not work in mac so
+    //I changed it to / and it worked both in mac and windows...
+    const newPath = path.replace("\\", "/");
+    const pathExists = fs.existsSync(newPath);
     if (!pathExists) {
       return res.status(400).json({
         error: "There is no such movie or traler path in the storage.",
       });
     }
-    const stat = fs.statSync(path);
+    const stat = fs.statSync(newPath);
     const fileSize = stat.size;
     const range = req.headers.range;
     if (range) {
@@ -218,7 +221,7 @@ const getMediaAccessLink = async (req, res) => {
       const start = parseInt(parts[0], 10);
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1; // no idea why filesize -1
       const chunksize = end - start + 1;
-      const file = fs.createReadStream(path, { start, end });
+      const file = fs.createReadStream(newPath, { start, end });
       const head = {
         "Content-Range": `bytes ${start}-${end}/${fileSize}`,
         "Accept-Ranges": "bytes",
@@ -233,7 +236,7 @@ const getMediaAccessLink = async (req, res) => {
         "Content-Type": "video/mp4",
       };
       res.writeHead(200, head);
-      fs.createReadStream(path).pipe(res);
+      fs.createReadStream(newPath).pipe(res);
     }
   }
 };
