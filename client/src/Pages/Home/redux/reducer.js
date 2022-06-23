@@ -3,6 +3,7 @@ import HOME_SCREEN_ACTION_TYPES from "./types";
 
 const defaultHomeScreenState = {
   data: {
+    myList: [],
     sliders: [],
     bannerMovie: { data: {}, apiStatus: null, error: null },
   },
@@ -109,6 +110,68 @@ const homeScreenReducer = (state = defaultHomeScreenState, action) => {
           },
         },
       };
+
+    case HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_STARTED:
+      return {
+        ...state,
+        apiStatus: API_STATUS.GETTING,
+        error: null,
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_SUCCESS:
+      return {
+        ...state,
+        apiStatus: API_STATUS.SUCCESS,
+        data: { ...state.data, myList: action.payload.data },
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_ERROR:
+      return {
+        ...state,
+        apiStatus: API_STATUS.ERROR,
+        error: action.payload.error,
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.ADD_TO_MY_LIST_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          myList: [...state.data.myList, action.payload.data],
+        },
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.ADD_TO_MY_LIST_ERROR:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          myList: state.data.myList.filter(
+            (movie) => movie._id !== action.payload.movieIdToRemove
+          ),
+        },
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.DELETE_FROM_MY_LIST_ERROR:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          myList: [...state.data.myList, action.payload.data],
+        },
+      };
+
+    case HOME_SCREEN_ACTION_TYPES.DELETE_FROM_MY_LIST_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          myList: state.data.myList.filter(
+            (movie) => movie._id !== action.payload.movieIdToRemove
+          ),
+        },
+      };
+
     default:
       return state;
   }

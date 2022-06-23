@@ -6,7 +6,11 @@ import { BsPlusLg } from "react-icons/bs";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillPlayFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovieListThunk, getRandomMovieThunk } from "./redux/thunks";
+import {
+  getMovieListThunk,
+  getMyListThunk,
+  getRandomMovieThunk,
+} from "./redux/thunks";
 import { GENRES } from "../../Global/Constants/constant";
 import SliderLoading from "../../Global/Components/Slider/SliderLoading/SliderLoading";
 import { API_STATUS } from "../../Global/Api/constants";
@@ -20,10 +24,10 @@ function "observerHandler" will remember its lexical scope
 */
 let slidersLength;
 function Home() {
-  const { sliders, apiStatus, bannerMovie, open } = useSelector(
+  const { sliders, apiStatus, bannerMovie, open, myList } = useSelector(
     ({
       homeScreen: {
-        data: { sliders, bannerMovie },
+        data: { sliders, bannerMovie, myList },
         apiStatus,
       },
       movieMoreInfo: { open },
@@ -32,6 +36,7 @@ function Home() {
       apiStatus,
       bannerMovie,
       open,
+      myList,
     })
   );
   slidersLength = sliders?.length;
@@ -41,7 +46,7 @@ function Home() {
   const skip = 0;
   const limit = 20;
   const observerHandler = () => {
-    if (slidersLength > 0 && slidersLength < 6)
+    if (slidersLength < 5)
       dispatch(
         getMovieListThunk(
           SLIDER_CATEGORIES_FOR_HOME_PAGE[slidersLength],
@@ -61,12 +66,12 @@ function Home() {
 
   useEffect(() => {
     elementRef.current = document.getElementById("footer");
-    if (slidersLength === 0) {
-      dispatch(getMovieListThunk(GENRES.ALL_GENRES, 0, 40, "All Movies"));
+    if (sliders.length === 0) {
+      dispatch(getMyListThunk());
+      dispatch(getRandomMovieThunk());
     }
-    dispatch(getRandomMovieThunk());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sliders]);
 
   return (
     <main className="home">
@@ -135,6 +140,14 @@ function Home() {
             </div>
           </div>
         </div>
+        {myList.length > 0 && (
+          <Slider
+            isMyList={true}
+            title={"My List"}
+            list={myList}
+            isLoading={apiStatus.apiStatus === API_STATUS.GETTING}
+          />
+        )}
         {sliders.map((slider, index) => (
           <Slider
             key={index}

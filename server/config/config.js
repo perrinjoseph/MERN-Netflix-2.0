@@ -4,6 +4,7 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const fs = require("fs");
+const userModel = require("../models/user");
 
 dotenv.config();
 module.exports = (async function () {
@@ -11,6 +12,7 @@ module.exports = (async function () {
   let db;
   try {
     db = await mongoose.connect(process.env.MONGO_URI);
+
     gfs = await new mongoose.mongo.GridFSBucket(db.connection, {
       bucketName: "mediaBucket",
     });

@@ -3,7 +3,7 @@ import Card from "../Card";
 import { FiChevronRight } from "react-icons/fi";
 import { FiChevronLeft } from "react-icons/fi";
 import { API_STATUS } from "../../Api/constants";
-function Slider({ title, list = [], isLoading }) {
+function Slider({ title, list = [], isLoading, isMyList = false }) {
   const [onHover, setOnHover] = useState(false);
   const [scroll, setScroll] = useState(0);
   const [screenWidth, setScreenWidth] = useState(0);
@@ -74,6 +74,7 @@ function Slider({ title, list = [], isLoading }) {
           >
             {list?.map((movie, index) => (
               <Card
+                showMyListCard={isMyList}
                 screenWidth={screenWidth}
                 growDirection={
                   (index + 1) % screensShowing === 1
