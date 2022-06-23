@@ -9,9 +9,12 @@ const API_ENDPOINTS = {
     GET_FIND_USER: "/users/find",
     GET_FIND_ALL_USERS: "/users/",
     GET_USER_STATS: "/users/stats",
+    GET_MY_LIST: "/users/mylist/userid/",
     POST_VERIFY_USER_SIGNED_UP: "/users/find",
-    PUT_UPDATE_UPSER: "/users/update/",
+    PUT_UPDATE_USER: "/users/update/",
+    PUT_ADD_TO_MY_LIST: "/users/mylist/userid",
     DELETE_USER: "/users/delete/",
+    DELETE_FROM_MY_LIST: "/users/mylist/userid",
   },
   MOVIES: {
     GET_FIND_MOVIE: "/movies",

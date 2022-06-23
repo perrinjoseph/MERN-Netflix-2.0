@@ -1,5 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 import addButton from "../../Assets/addbutton.svg";
+import removeButton from "../../Assets/remove-button.svg";
 import playButton from "../../Assets/playbutton.svg";
 import thumbsUpButton from "../../Assets/thumbsup.svg";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -8,6 +9,10 @@ import GLOBAL_ACTIONS from "../../Redux/actions";
 import axiosClient from "../../Api/axiosConfig";
 import { CgMoreO } from "react-icons/cg";
 import MOVIE_INFORMATION_ACTIONS from "../MovieInformation/redux/actions";
+import {
+  addToMyListThunk,
+  deleteFromMyListThunk,
+} from "../../../Pages/Home/redux/thunks";
 
 const Card = React.forwardRef(
   (
@@ -21,6 +26,7 @@ const Card = React.forwardRef(
       getOnHover,
       growDirection,
       screenWidth,
+      showMyListCard,
     },
     ref
   ) => {
@@ -160,9 +166,26 @@ const Card = React.forwardRef(
                 >
                   <img src={playButton} alt="play button"></img>
                 </button>
-                <button className="card--desc--buttons--btn">
-                  <img src={addButton} alt="add button"></img>
-                </button>
+                {!showMyListCard && (
+                  <button
+                    className="card--desc--buttons--btn"
+                    onClick={() => {
+                      dispatch(addToMyListThunk(movie));
+                    }}
+                  >
+                    <img src={addButton} alt="add button"></img>
+                  </button>
+                )}
+                {showMyListCard && (
+                  <button
+                    className="card--desc--buttons--btn"
+                    onClick={() => {
+                      dispatch(deleteFromMyListThunk(movie));
+                    }}
+                  >
+                    <img src={removeButton} alt="add button"></img>
+                  </button>
+                )}
                 <button className="card--desc--buttons--btn">
                   <img src={thumbsUpButton} alt="like button"></img>
                 </button>

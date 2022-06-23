@@ -38,13 +38,54 @@ const getRandomMovieSuccessAction = (data) => ({
   payload: { data },
 });
 
+const getMyListStartedAction = () => ({
+  type: HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_STARTED,
+});
+
+const getMyListSuccessAction = (data) => ({
+  type: HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_SUCCESS,
+  payload: { data },
+});
+
+const getMyListErrorAction = (error) => ({
+  type: HOME_SCREEN_ACTION_TYPES.GET_MY_LIST_ERROR,
+  payload: { error },
+});
+
+const addToMyListSuccessAction = (data) => ({
+  type: HOME_SCREEN_ACTION_TYPES.ADD_TO_MY_LIST_SUCCESS,
+  payload: { data },
+});
+
+const addToMyListErrorAction = (movieIdToRemove, error) => ({
+  type: HOME_SCREEN_ACTION_TYPES.ADD_TO_MY_LIST_ERROR,
+  payload: { movieIdToRemove, error },
+});
+
+const deleteFromListSuccessAction = (movieIdToRemove) => ({
+  type: HOME_SCREEN_ACTION_TYPES.DELETE_FROM_MY_LIST_SUCCESS,
+  payload: { movieIdToRemove },
+});
+
+const deleteFromListErrorAction = (data, error) => ({
+  type: HOME_SCREEN_ACTION_TYPES.DELETE_FROM_MY_LIST_ERROR,
+  payload: { data, error },
+});
+
 const HOME_SCREEN_ACTIONS = {
+  deleteFromListErrorAction,
+  deleteFromListSuccessAction,
+  addToMyListErrorAction,
+  addToMyListSuccessAction,
   getMovieListSuccessAction,
   getMovieListErrorAction,
   getMovieListStartedAction,
   getRandomMovieStartedAction,
   getRandomMovieErrorAction,
   getRandomMovieSuccessAction,
+  getMyListStartedAction,
+  getMyListSuccessAction,
+  getMyListErrorAction,
 };
 
 export default HOME_SCREEN_ACTIONS;
