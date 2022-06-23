@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import addButton from "../../Assets/addbutton.svg";
 import removeButton from "../../Assets/remove-button.svg";
 import playButton from "../../Assets/playbutton.svg";
@@ -14,6 +14,7 @@ import {
   deleteFromMyListThunk,
 } from "../../../Pages/Home/redux/thunks";
 
+let timer;
 const Card = React.forwardRef(
   (
     {
@@ -35,13 +36,14 @@ const Card = React.forwardRef(
     const [cardHoverEffectStyle, setCardHoverEffectStyle] = useState({});
     const videoRef = createRef();
     const [extend, setExtend] = useState(false);
+
     const extendStyle = {
       zIndex: "2",
       boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
     };
     useEffect(() => {
       setCardHoverEffectStyle({
-        transitionDelay: "0.5s",
+        transitionDelay: "0s",
         transformOrigin: growDirection,
         transform: "scale(1.5)",
         zIndex: "2",
@@ -86,10 +88,16 @@ const Card = React.forwardRef(
     }, [extend]);
 
     const handleOnMouseEnter = () => {
-      if (screenWidth >= 825) setOnHover(true);
+      if (screenWidth >= 825) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          setOnHover(true);
+        }, 800);
+      }
     };
 
     const handleOnMouseLeave = () => {
+      if (timer) clearTimeout(timer);
       setOnHover(false);
     };
 
