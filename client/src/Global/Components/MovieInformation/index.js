@@ -21,6 +21,7 @@ function MovieInformation() {
 
   useEffect(() => {
     dispatch(getMoreLikeThisListThunk(movie.genre, 0, 6));
+    
   }, [movie]);
 
   return (
