@@ -144,7 +144,14 @@ const Card = React.forwardRef(
           </button>
         </section>
 
-        <div className="card--mediacontainer">
+        <div
+          className="card--mediacontainer"
+          onClick={() => {
+            if (screenWidth <= 825 && screenWidth >= 600) {
+              setExtend((extend) => !extend);
+            }
+          }}
+        >
           <img
             width={"100%"}
             height={"auto"}
