@@ -77,7 +77,7 @@ function Slider({ title, list = [], isLoading, isMyList = false }) {
           <div
             className="slider--main--carousel"
             style={{
-              transition: "all 0.8s ease-in-out",
+              transition: "all 0.5s ease-in-out",
               transform: `translateX(${-100 * scroll}%)`,
             }}
           >
