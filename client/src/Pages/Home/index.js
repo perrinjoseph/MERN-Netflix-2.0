@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../Global/Components/Button/Button";
 import { buttonTypes } from "../../Global/Components/Button/constants";
 import Slider from "../../Global/Components/Slider";
@@ -11,7 +11,6 @@ import {
   getMyListThunk,
   getRandomMovieThunk,
 } from "./redux/thunks";
-import { GENRES } from "../../Global/Constants/constant";
 import SliderLoading from "../../Global/Components/Slider/SliderLoading/SliderLoading";
 import { API_STATUS } from "../../Global/Api/constants";
 import useElementOnScreen from "../../Global/Hooks/useElementOnScreen";

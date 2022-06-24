@@ -142,6 +142,7 @@
       }
 
       &--btn {
+        position: relative;
         margin: 0px 3px;
         cursor: pointer;
         width: 30px;
@@ -155,6 +156,36 @@
         align-items: center;
         transition: all 0.2s ease-in-out;
         opacity: 0.7;
+
+        &--toolTip {
+          position: absolute;
+          top: -25px;
+          opacity: 0;
+          transition: all 0.2s ease-in-out;
+          background-color: $color-red-primary;
+          color: $color-font-light;
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+            rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+            rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+          padding: 2px 5px;
+          border-radius: 5px;
+          font-size: 8px;
+          white-space: nowrap;
+          font-weight: 600;
+
+          &--triangle {
+            position: absolute;
+            transform: rotate(-45deg);
+            margin-left: auto;
+            margin-right: auto;
+            bottom: -1.3px;
+            left: 0;
+            right: 0;
+            width: 5px;
+            height: 5px;
+            background-color: $color-red-primary;
+          }
+        }
 
         &:hover {
           transform: scale(1.1);
@@ -197,5 +228,15 @@
   .card--mediacontainer--mobileDesc {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+  }
+}
+
+.show--tooltip {
+  opacity: 1;
+}
+
+@media (max-width: 618px) {
+  .show--tooltip {
+    opacity: 0;
   }
 }

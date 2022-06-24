@@ -1,27 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Button from "../Button/Button";
 import { buttonTypes } from "../Button/constants";
-import { RiThumbUpLine } from "react-icons/ri";
 import { colors } from "../../../Styles/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoreLikeThisListThunk } from "./redux/thunks";
-import { AiOutlinePlus } from "react-icons/ai";
+import addButton from "../../Assets/addbutton.svg";
+import thumbsUpButton from "../../Assets/thumbsup.svg";
+import removeButton from "../../Assets/remove-button.svg";
+
 import { MdClose } from "react-icons/md";
 import MOVIE_INFORMATION_ACTIONS from "./redux/actions";
+import CardButton from "../Card/CardButton";
+import {
+  addToMyListThunk,
+  deleteFromMyListThunk,
+} from "../../../Pages/Home/redux/thunks";
 
 function MovieInformation() {
-  const { moreLikeThis, movie } = useSelector(
+  const { moreLikeThis, movie, myList } = useSelector(
     ({
+      homeScreen: {
+        data: { myList },
+      },
       movieMoreInfo: {
         data: { moreLikeThis, movie },
       },
-    }) => ({ moreLikeThis, movie })
+    }) => ({ moreLikeThis, movie, myList })
   );
   const dispatch = useDispatch();
 
+  const isMyListMovie = useMemo(
+    () =>
+      myList.find((eachMovie) => eachMovie._id === movie._id) ? true : false,
+    [myList, movie]
+  );
+
   useEffect(() => {
     dispatch(getMoreLikeThisListThunk(movie.genre, 0, 6));
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movie]);
 
   return (
@@ -54,12 +70,31 @@ function MovieInformation() {
               title="Play"
               style={{ width: "30%", height: "40px" }}
             />
-            <div className="movieInformation-modal--video-title--btn">
-              <AiOutlinePlus size={27} color="white" />
-            </div>
-            <div className="movieInformation-modal--video-title--btn">
-              <RiThumbUpLine size={27} color="white" />
-            </div>
+
+            {isMyListMovie ? (
+              <CardButton
+                icon={removeButton}
+                onClick={() => {
+                  dispatch(deleteFromMyListThunk(movie));
+                }}
+                toolTipMessage="Remove from list"
+              />
+            ) : (
+              <CardButton
+                icon={addButton}
+                onClick={() => {
+                  dispatch(addToMyListThunk(movie));
+                }}
+                toolTipMessage="Add to my list"
+              />
+            )}
+            <CardButton
+              icon={thumbsUpButton}
+              onClick={() => {
+                dispatch(addToMyListThunk(movie));
+              }}
+              toolTipMessage="Add to my list"
+            />
           </section>
           <h2>{movie.title}</h2>
           <section className="movieInformation-modal--infoContainer--row">

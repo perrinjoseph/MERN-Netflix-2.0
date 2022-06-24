@@ -1,18 +1,19 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { createRef, useEffect, useMemo, useState } from "react";
 import addButton from "../../Assets/addbutton.svg";
 import removeButton from "../../Assets/remove-button.svg";
 import playButton from "../../Assets/playbutton.svg";
 import thumbsUpButton from "../../Assets/thumbsup.svg";
+import moreBtn from "../../Assets/more-option-btn.svg";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
 import axiosClient from "../../Api/axiosConfig";
-import { CgMoreO } from "react-icons/cg";
 import MOVIE_INFORMATION_ACTIONS from "../MovieInformation/redux/actions";
 import {
   addToMyListThunk,
   deleteFromMyListThunk,
 } from "../../../Pages/Home/redux/thunks";
+import CardButton from "./CardButton";
 
 let timer;
 const Card = React.forwardRef(
@@ -27,11 +28,25 @@ const Card = React.forwardRef(
       getOnHover,
       growDirection,
       screenWidth,
-      showMyListCard,
     },
     ref
   ) => {
     const dispatch = useDispatch();
+
+    const { myList } = useSelector(
+      ({
+        homeScreen: {
+          data: { myList },
+        },
+      }) => ({ myList })
+    );
+
+    const isMyListMovie = useMemo(
+      () =>
+        myList.find((eachMovie) => eachMovie._id === movie._id) ? true : false,
+      [myList, movie]
+    );
+
     const [onHover, setOnHover] = useState(false);
     const [cardHoverEffectStyle, setCardHoverEffectStyle] = useState({});
     const videoRef = createRef();
@@ -69,6 +84,7 @@ const Card = React.forwardRef(
         }
       };
       getMovie();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [onHover, trailer]);
 
     useEffect(() => {
@@ -161,49 +177,41 @@ const Card = React.forwardRef(
         </div>
 
         {screenWidth >= 825 && (
-          <div
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-            className={`card--desc ${onHover ? "card--desc--show" : ""}`}
-          >
+          <div className={`card--desc ${onHover ? "card--desc--show" : ""}`}>
             <div className="card--desc--buttons">
               <div className="card--desc--buttons--row">
-                <button
-                  className="card--desc--buttons--btn"
+                <CardButton
+                  icon={playButton}
                   onClick={handlePlayButtonClick}
-                >
-                  <img src={playButton} alt="play button"></img>
-                </button>
-                {!showMyListCard && (
-                  <button
-                    className="card--desc--buttons--btn"
-                    onClick={() => {
-                      dispatch(addToMyListThunk(movie));
-                    }}
-                  >
-                    <img src={addButton} alt="add button"></img>
-                  </button>
-                )}
-                {showMyListCard && (
-                  <button
-                    className="card--desc--buttons--btn"
+                  toolTipMessage="Play"
+                />
+                {isMyListMovie ? (
+                  <CardButton
+                    icon={removeButton}
                     onClick={() => {
                       dispatch(deleteFromMyListThunk(movie));
                     }}
-                  >
-                    <img src={removeButton} alt="add button"></img>
-                  </button>
+                    toolTipMessage="Remove from list"
+                  />
+                ) : (
+                  <CardButton
+                    icon={addButton}
+                    onClick={() => {
+                      dispatch(addToMyListThunk(movie));
+                    }}
+                    toolTipMessage="Add to my list"
+                  />
                 )}
-                <button className="card--desc--buttons--btn">
-                  <img src={thumbsUpButton} alt="like button"></img>
-                </button>
+                <CardButton icon={thumbsUpButton} toolTipMessage="Like" />
               </div>
-              <CgMoreO
+
+              <CardButton
+                icon={moreBtn}
                 onClick={() => {
                   setExtend((extend) => !extend);
                 }}
                 className="card--desc--buttons--btn"
-                size={23}
+                toolTipMessage="More Info"
               />
             </div>
 

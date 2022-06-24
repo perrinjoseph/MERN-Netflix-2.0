@@ -71,7 +71,7 @@ export const addToMyListThunk = (movie) => async (dispatch, getState) => {
   console.log(myList.length);
   if (
     !myList.find((eachMovie) => eachMovie._id === movie._id) &&
-    myList.length <= 5
+    myList.length < 5
   ) {
     dispatch(HOME_SCREEN_ACTIONS.addToMyListSuccessAction(movie));
     try {
