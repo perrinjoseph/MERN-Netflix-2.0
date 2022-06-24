@@ -1,0 +1,15 @@
+.myListPage {
+  height: 100vh;
+  padding-top: 100px;
+
+  &-noMovies {
+    color: $color-font-dark-980;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-weight: 800 !important;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    text-align: center;
+  }
+}

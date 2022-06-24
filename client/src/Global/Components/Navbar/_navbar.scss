@@ -14,7 +14,6 @@
   transition: all 0.3s ease-in-out;
   background-color: rgba(0, 0, 0, 0);
 
-
   &--overlay {
     position: absolute;
     top: 0;
@@ -218,6 +217,29 @@
   }
 }
 
+.nav-link {
+  &-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // transition: 0.2s ease-in-out;
+    color: white !important;
+  }
+  &-default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: $color-font-dark-650;
+    // transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
 @media (max-width: 871px) {
   #navbar-left-links {
     position: fixed;
@@ -234,8 +256,7 @@
       rgba(0, 0, 0, 0)
     );
   }
-  #navbar-left-links > li:nth-child(1),
-  #navbar-left-links > li:nth-child(4) {
+  #navbar-left-links > li:nth-child(1) {
     display: none;
   }
 

@@ -6,6 +6,7 @@ import useAuthentication from "./Global/Hooks/useAuthentication";
 import useAxiosInterceptors from "./Global/Hooks/useAxiosInterceptors";
 import AccountSetup from "./Pages/AccountSetup/AccountSetup";
 import Login from "./Pages/Login/Login";
+import MyList from "./Pages/MyList";
 import SignUp from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./Router/ProtectedRoute";
 import PublicRoute from "./Router/PublicRoute";
@@ -41,6 +42,7 @@ function NewApp() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/home" element={<Home />} />
+              <Route path="/mylist" element={<MyList />} />
             </Route>
           </Routes>
         </Suspense>
