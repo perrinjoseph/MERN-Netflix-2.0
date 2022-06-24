@@ -20,6 +20,7 @@ import MovieInformation from "../../Global/Components/MovieInformation";
 /*
 This is done to create a closure here. because the call back 
 function "observerHandler" will remember its lexical scope 
+useRef can be used to do the same. An example is in Global/Card/CardButton.js
 */
 let slidersLength;
 function Home() {

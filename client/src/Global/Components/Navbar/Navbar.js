@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import NetflixLogo from "../../Assets/netflix-logo.png";
 import NetflixLogoSmall from "../../Assets/netflix-logo-small.png";
 import Avatar3 from "../../Assets/avatar3.png";
-import { navBarRoutes } from "../../Constants/constant";
+import { navBarRoutes, navBarTitles } from "../../Constants/constant";
 import { FiSearch, FiBell, FiChevronDown, FiLogOut } from "react-icons/fi";
 import { navbarTypes } from "./constants";
 import Button from "../Button/Button";
@@ -11,7 +11,7 @@ import { AiFillHome } from "react-icons/ai";
 import { BsCollectionPlayFill } from "react-icons/bs";
 import { MdLibraryAdd, MdWhatshot } from "react-icons/md";
 import { FiCast } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useMatch, useResolvedPath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillPersonFill } from "react-icons/bs";
 import { logoutUserThunk } from "../../Redux/thunks";
@@ -41,50 +41,70 @@ function Navbar({ type }) {
   if (type === navbarTypes.MOBILE_HOME) {
     return (
       <nav className="navbar-mobile">
-        <button
-          className={`navbar-mobile--buttons ${
-            activeLink === 1 ? "navbar-mobile--buttons-clicked" : ""
-          }`}
-          onClick={() => setActiveLink(1)}
-        >
-          <AiFillHome size={23} />
-          Home
+        <button className="navbar-mobile--buttons ">
+          <NavLink
+            to="/home"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link-selected link-styles-reset"
+                : "nav-link-default link-styles-reset"
+            }
+          >
+            <AiFillHome size={23} />
+            Home
+          </NavLink>
         </button>
-        <button
-          className={`navbar-mobile--buttons ${
-            activeLink === 2 ? "navbar-mobile--buttons-clicked" : ""
-          }`}
-          onClick={() => setActiveLink(2)}
-        >
-          <BsCollectionPlayFill size={23} />
-          New
+        <button className="navbar-mobile--buttons ">
+          <NavLink
+            to="/new"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link-selected link-styles-reset"
+                : "nav-link-default link-styles-reset"
+            }
+          >
+            <BsCollectionPlayFill size={23} />
+            New
+          </NavLink>
         </button>
-        <button
-          className={`navbar-mobile--buttons ${
-            activeLink === 3 ? "navbar-mobile--buttons-clicked" : ""
-          }`}
-          onClick={() => setActiveLink(3)}
-        >
-          <MdLibraryAdd size={23} />
-          My List
+        <button className="navbar-mobile--buttons ">
+          <NavLink
+            to="/mylist"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link-selected link-styles-reset"
+                : "nav-link-default link-styles-reset"
+            }
+          >
+            <MdLibraryAdd size={23} />
+            My List
+          </NavLink>
         </button>
-        <button
-          className={`navbar-mobile--buttons ${
-            activeLink === 4 ? "navbar-mobile--buttons-clicked" : ""
-          }`}
-          onClick={() => setActiveLink(4)}
-        >
-          <FiSearch size={23} />
-          Search
+        <button className="navbar-mobile--buttons ">
+          <NavLink
+            to="/search"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link-selected link-styles-reset"
+                : "nav-link-default link-styles-reset"
+            }
+          >
+            <FiSearch size={23} />
+            Search
+          </NavLink>
         </button>
-        <button
-          className={`navbar-mobile--buttons ${
-            activeLink === 5 ? "navbar-mobile--buttons-clicked" : ""
-          }`}
-          onClick={() => setActiveLink(5)}
-        >
-          <MdWhatshot size={23} />
-          Top 10
+        <button className="navbar-mobile--buttons ">
+          <NavLink
+            to="/popular"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link-selected link-styles-reset"
+                : "nav-link-default link-styles-reset"
+            }
+          >
+            <MdWhatshot size={23} />
+            Top 10
+          </NavLink>
         </button>
       </nav>
     );
@@ -118,12 +138,21 @@ function Navbar({ type }) {
 
         {type === navbarTypes.HOME_SCREEN && (
           <ul className="navbar--section--links" id="navbar-left-links">
-            {navBarRoutes.map((route, index) => (
+            {navBarTitles.map((route, index) => (
               <li
                 key={`${route}-${index}`}
                 className="navbar--section--links--link navbar--section--links--link-mobile"
               >
-                {route}
+                <NavLink
+                  to={navBarRoutes[route]}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-selected link-styles-reset"
+                      : "nav-link-default link-styles-reset"
+                  }
+                >
+                  {route}
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -134,7 +163,16 @@ function Navbar({ type }) {
           {type === navbarTypes.HOME_SCREEN && (
             <>
               <li className="navbar--section--links--link navbar--icons navbar--icons-hidable">
-                <FiSearch color="white" />
+                <NavLink
+                  to="/popular"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-selected link-styles-reset"
+                      : "nav-link-default link-styles-reset"
+                  }
+                >
+                  <FiSearch />
+                </NavLink>
               </li>
               <li className="navbar--section--links--link navbar--icons navbar--icons-showable">
                 <FiCast color="white" />

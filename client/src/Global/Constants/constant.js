@@ -9,13 +9,14 @@ export const INPUT_TYPES = {
   CREDIT_CARD_SECURITY_CODE: "CREDIT_CARD_SECURITY_CODE",
 };
 
-export const navBarRoutes = [
-  "Home",
-  "TV Shows",
-  "Movies",
-  "New & Popular",
-  "My List",
-];
+export const navBarTitles = ["Home", "Popular", "New", "My List"];
+
+export const navBarRoutes = {
+  [navBarTitles[0]]: "/home",
+  [navBarTitles[1]]: "/popular",
+  [navBarTitles[2]]: "/new",
+  [navBarTitles[3]]: "/mylist",
+};
 
 export const GENRES = {
   ROMANCE: "Romance",
