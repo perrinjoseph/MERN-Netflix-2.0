@@ -26,7 +26,7 @@ function NewMovies() {
         {data.length > 0 && (
           <Slider
             isMyList={true}
-            title={"My List"}
+            title={"New Movies"}
             list={data}
             isLoading={apiStatus === API_STATUS.GETTING}
           />

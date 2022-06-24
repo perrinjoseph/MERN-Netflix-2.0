@@ -9,6 +9,7 @@ import Login from "./Pages/Login/Login";
 import MyList from "./Pages/MyList";
 import NewMovies from "./Pages/NewMovies";
 import Popular from "./Pages/Popular";
+import Search from "./Pages/Search";
 import SignUp from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./Router/ProtectedRoute";
 import PublicRoute from "./Router/PublicRoute";
@@ -47,6 +48,7 @@ function NewApp() {
               <Route path="/mylist" element={<MyList />} />
               <Route path="/new" element={<NewMovies />} />
               <Route path="/popular" element={<Popular />} />
+              <Route path="/search" element={<Search />} />
             </Route>
           </Routes>
         </Suspense>

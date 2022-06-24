@@ -11,7 +11,7 @@ import { AiFillHome } from "react-icons/ai";
 import { BsCollectionPlayFill } from "react-icons/bs";
 import { MdLibraryAdd, MdWhatshot } from "react-icons/md";
 import { FiCast } from "react-icons/fi";
-import { Link, NavLink, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillPersonFill } from "react-icons/bs";
 import { logoutUserThunk } from "../../Redux/thunks";
@@ -22,7 +22,6 @@ function Navbar({ type }) {
   const [toggle, setToggle] = useToggle(chevronRef);
   const dispatch = useDispatch();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState(null);
   const { data } = useSelector(({ user: { data } }) => ({ data }));
 
   useEffect(() => {
