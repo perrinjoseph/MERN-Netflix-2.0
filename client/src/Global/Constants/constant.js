@@ -16,6 +16,7 @@ export const navBarRoutes = {
   [navBarTitles[1]]: "/popular",
   [navBarTitles[2]]: "/new",
   [navBarTitles[3]]: "/mylist",
+  Search: "/search",
 };
 
 export const GENRES = {

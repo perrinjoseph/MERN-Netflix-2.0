@@ -164,7 +164,7 @@ function Navbar({ type }) {
             <>
               <li className="navbar--section--links--link navbar--icons navbar--icons-hidable">
                 <NavLink
-                  to="/popular"
+                  to="/search"
                   className={({ isActive }) =>
                     isActive
                       ? "nav-link-selected link-styles-reset"
