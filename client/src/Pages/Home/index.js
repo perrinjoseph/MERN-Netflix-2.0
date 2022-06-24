@@ -15,7 +15,6 @@ import SliderLoading from "../../Global/Components/Slider/SliderLoading/SliderLo
 import { API_STATUS } from "../../Global/Api/constants";
 import useElementOnScreen from "../../Global/Hooks/useElementOnScreen";
 import { SLIDER_CATEGORIES_FOR_HOME_PAGE } from "../../Global/Components/Slider/constants";
-import MovieInformation from "../../Global/Components/MovieInformation";
 
 /*
 This is done to create a closure here. because the call back 
@@ -24,18 +23,17 @@ useRef can be used to do the same. An example is in Global/Card/CardButton.js
 */
 let slidersLength;
 function Home() {
-  const { sliders, apiStatus, bannerMovie, open, myList } = useSelector(
+  const { sliders, apiStatus, bannerMovie, myList } = useSelector(
     ({
       homeScreen: {
         data: { sliders, bannerMovie, myList },
         apiStatus,
       },
-      movieMoreInfo: { open },
     }) => ({
       sliders,
       apiStatus,
       bannerMovie,
-      open,
+
       myList,
     })
   );
@@ -75,7 +73,6 @@ function Home() {
 
   return (
     <main className="home">
-      {open && <MovieInformation />}
       <header className="home--header">
         <div className={`home--header--banner--preloader `}>
           <img
