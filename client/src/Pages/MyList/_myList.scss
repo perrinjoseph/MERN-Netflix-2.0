@@ -3,6 +3,10 @@
   padding-top: 100px;
 
   &-noMovies {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     color: $color-font-dark-980;
     position: absolute;
     top: 50%;

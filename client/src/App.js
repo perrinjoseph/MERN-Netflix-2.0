@@ -7,6 +7,8 @@ import useAxiosInterceptors from "./Global/Hooks/useAxiosInterceptors";
 import AccountSetup from "./Pages/AccountSetup/AccountSetup";
 import Login from "./Pages/Login/Login";
 import MyList from "./Pages/MyList";
+import NewMovies from "./Pages/NewMovies";
+import Popular from "./Pages/Popular";
 import SignUp from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./Router/ProtectedRoute";
 import PublicRoute from "./Router/PublicRoute";
@@ -43,6 +45,8 @@ function NewApp() {
             <Route element={<ProtectedRoute />}>
               <Route path="/home" element={<Home />} />
               <Route path="/mylist" element={<MyList />} />
+              <Route path="/new" element={<NewMovies />} />
+              <Route path="/popular" element={<Popular />} />
             </Route>
           </Routes>
         </Suspense>

@@ -1,6 +1,7 @@
 const movieModel = require("../models/movie.js");
 const { default: mongoose } = require("mongoose");
 const fs = require("fs");
+const e = require("express");
 
 const createMovieController = async (req, res) => {
   const fileExists = (pathname) => {
@@ -245,17 +246,33 @@ const findMovieList = async (req, res) => {
   const limit = req.query.limit || 0;
   const skipRecords = req.query.skip || 0;
   const genre = req.query.genre;
+  const { newMovies } = req.query;
 
-  try {
-    const movies = await movieModel
-      .find(genre === "allGenres" ? {} : { genre: genre })
-      .skip(skipRecords)
-      .limit(limit);
-    return res.status(200).json(movies);
-  } catch (err) {
-    res
-      .status(400)
-      .json({ error: "The movies you are looking do not exist.", err });
+  if (!newMovies) {
+    try {
+      const movies = await movieModel
+        .find(genre === "allGenres" ? {} : { genre: genre })
+        .skip(skipRecords)
+        .limit(limit);
+      return res.status(200).json(movies);
+    } catch (err) {
+      res
+        .status(400)
+        .json({ error: "The movies you are looking do not exist.", err });
+    }
+  } else if (newMovies) {
+    try {
+      const response = await movieModel.find().sort({ _id: -1 }).limit(10);
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(400)
+        .json({
+          error: "Oppse! something went wrong while fetching movies.",
+          err,
+        });
+    }
   }
 };
 

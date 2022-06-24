@@ -7,6 +7,30 @@
     z-index: 2;
   }
 
+  &--pages {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    height: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--page {
+      width: 13px;
+      height: 100%;
+      background-color: $color-font-dark-900;
+      margin: 0px 2px;
+
+      &-viewing {
+        background-color: rgba(
+          $color: $color-red-primary,
+          $alpha: 0.7
+        ) !important;
+      }
+    }
+  }
+
   &--title {
     color: $color-font-light;
     margin-bottom: 10px;

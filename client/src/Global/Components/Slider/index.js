@@ -2,13 +2,12 @@ import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import Card from "../Card";
 import { FiChevronRight } from "react-icons/fi";
 import { FiChevronLeft } from "react-icons/fi";
-import { API_STATUS } from "../../Api/constants";
+
 function Slider({ title, list = [], isLoading, isMyList = false }) {
   const [onHover, setOnHover] = useState(false);
   const [scroll, setScroll] = useState(0);
   const [screenWidth, setScreenWidth] = useState(0);
   const cardRef = createRef();
-  const hoverRef = useRef(null);
   const [maximumPage, setMaximumPage] = useState();
 
   useEffect(() => {
@@ -42,17 +41,27 @@ function Slider({ title, list = [], isLoading, isMyList = false }) {
 
   const handleOnHover = (value) => {
     if (value) {
-      hoverRef.current = setTimeout(() => {
-        setOnHover(value);
-      }, 600);
+      setOnHover(value);
     } else {
       setOnHover(false);
-      clearTimeout(hoverRef.current);
     }
   };
   return (
     !isLoading && (
       <article className="slider">
+        {maximumPage > 1 && screenWidth > 600 && (
+          <div className="slider--pages">
+            {[...new Array(maximumPage)].map((_, index) => {
+              return (
+                <article
+                  className={`slider--pages--page ${
+                    index === scroll ? "slider--pages--page-viewing" : ""
+                  }`}
+                ></article>
+              );
+            })}
+          </div>
+        )}
         <h2 className="slider--title">{title}</h2>
         <div className="slider--main">
           {!onHover && scroll !== 0 && (
@@ -74,6 +83,7 @@ function Slider({ title, list = [], isLoading, isMyList = false }) {
           >
             {list?.map((movie, index) => (
               <Card
+                key={`${movie.title}-${movie._id}`}
                 showMyListCard={isMyList}
                 screenWidth={screenWidth}
                 growDirection={
@@ -83,7 +93,6 @@ function Slider({ title, list = [], isLoading, isMyList = false }) {
                     ? `${(screenWidth / screensShowing) * 1.35}px`
                     : "center"
                 }
-                key={`${movie.title}-${movie._id}`}
                 getOnHover={handleOnHover}
                 img={movie.thumbnailImage.filename}
                 title={movie.title}
