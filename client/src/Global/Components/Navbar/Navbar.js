@@ -11,18 +11,29 @@ import { AiFillHome } from "react-icons/ai";
 import { BsCollectionPlayFill } from "react-icons/bs";
 import { MdLibraryAdd, MdWhatshot } from "react-icons/md";
 import { FiCast } from "react-icons/fi";
-import { Link, NavLink } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillPersonFill } from "react-icons/bs";
 import { logoutUserThunk } from "../../Redux/thunks";
 import useToggle from "../../Hooks/useToggle";
 
 function Navbar({ type }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const chevronRef = useRef();
   const [toggle, setToggle] = useToggle(chevronRef);
   const dispatch = useDispatch();
   const [isScrolled, setIsScrolled] = useState(false);
   const { data } = useSelector(({ user: { data } }) => ({ data }));
+  const searchRef = useRef();
+  const navigate = useNavigate();
+  const [isFocusing, setIsFocusing] = useState();
 
   useEffect(() => {
     const listener = window.addEventListener("scroll", () => {
@@ -161,17 +172,43 @@ function Navbar({ type }) {
         <ul className="navbar--section--links">
           {type === navbarTypes.HOME_SCREEN && (
             <>
-              <li className="navbar--section--links--link navbar--icons navbar--icons-hidable">
-                <NavLink
-                  to="/search"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "nav-link-selected link-styles-reset"
-                      : "nav-link-default link-styles-reset"
-                  }
+              <li className="navbar--section--links--link navbar--icons-hidable">
+                <div
+                  className={`home--search ${isFocusing && "isFocusing"}`}
+                  onClick={() => {
+                    if (searchRef.current) {
+                      navigate("/search", { replace: true });
+                      searchRef.current.focus();
+                      setIsFocusing(true);
+                    }
+                  }}
                 >
-                  <FiSearch />
-                </NavLink>
+                  <FiSearch
+                    color={isFocusing ? "#848484" : "white"}
+                    size={24}
+                    strokeWidth={3}
+                  />
+
+                  <input
+                    onChange={(e) => {
+                      const params = createSearchParams({
+                        search: e.target.value,
+                      });
+                      setSearchParams(params);
+                    }}
+                    onFocus={() => {
+                      setIsFocusing(true);
+                    }}
+                    onBlur={() => {
+                      setIsFocusing(false);
+                      if (!searchRef.current.value) {
+                        navigate("/home", { replace: true });
+                      }
+                    }}
+                    ref={searchRef}
+                    className="home--search--input"
+                  ></input>
+                </div>
               </li>
               <li className="navbar--section--links--link navbar--icons navbar--icons-showable">
                 <FiCast color="white" />

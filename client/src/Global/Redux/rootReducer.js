@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import homeScreenReducer from "../../Pages/Home/redux/reducer";
 import newMoviesReducer from "../../Pages/NewMovies/redux/reducer";
+import searchPageReducer from "../../Pages/Search/redux/reducer";
 import signUpReducer from "../../Pages/SignUp/redux/reducer";
 import { API_STATUS } from "../Api/constants";
 import moreInformationReducer from "../Components/MovieInformation/redux/reducer";
@@ -110,4 +111,5 @@ export default combineReducers({
   homeScreen: homeScreenReducer,
   movieMoreInfo: moreInformationReducer,
   newMovies: newMoviesReducer,
+  search: searchPageReducer,
 });
