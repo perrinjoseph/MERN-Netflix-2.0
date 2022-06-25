@@ -8,6 +8,7 @@ const {
   findMovieList,
   deleteFileController,
   handleVideoFiles,
+  searchMovies,
 } = require("../controllers/movies.js");
 const verifyToken = require("../middleware/verifyToken.js");
 const router = require("./routerConfig.js");
@@ -32,11 +33,9 @@ router.get("/:id", verifyToken, findMovie);
 router.post("/search/genre/skip/limit/", verifyToken, findMovieList);
 router.get("/random/banner", verifyToken, getRandomMovie);
 router.get("/accessLink/media/:filename", verifyToken, getMediaAccessLink);
+router.get("/search/movies/searchfor", verifyToken, searchMovies);
 router.delete("/delete/file/:id", verifyToken, deleteFileController);
-/**
- * params: id
- * Query params: type= video || trailer
- */
+//params: id Query: type= video || trailer
 require("../config/config.js").then(({ uploadVideos }) => {
   router.put(
     "/upload/videos/:id",
