@@ -334,7 +334,7 @@ const searchMovies = async (req, res) => {
   try {
     const movies = await movieModel
       .find({ title: { $regex: search, $options: "i" } })
-      .limit(10);
+      .limit(25);
     res.status(200).json(movies);
   } catch (err) {
     res.status(400).json({ error: "Oppse! Could not search for movies.".err });

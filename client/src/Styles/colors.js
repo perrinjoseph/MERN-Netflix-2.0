@@ -11,6 +11,7 @@ export const colors = {
   },
   blue: {
     primary: "#009aee",
+    secondary: "#00e1ff",
   },
   green: {
     primary: "limegreen",

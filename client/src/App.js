@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import Alert from "./Global/Components/Alert";
+import { ALERT_TYPES } from "./Global/Components/Alert/constants";
 import FallbackLoadingScreen from "./Global/Components/FallbackLoadingScreen";
 import { FALLBACK_SCREEN_TYPES } from "./Global/Components/FallbackLoadingScreen/constants";
 import useAuthentication from "./Global/Hooks/useAuthentication";
@@ -28,6 +30,7 @@ function NewApp() {
   */
   return (
     <div className="App">
+      <Alert type={ALERT_TYPES.ERROR} />
       {isLoading && (
         <FallbackLoadingScreen type={FALLBACK_SCREEN_TYPES.APP_LOADING} />
       )}
