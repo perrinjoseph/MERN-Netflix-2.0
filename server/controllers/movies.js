@@ -266,12 +266,10 @@ const findMovieList = async (req, res) => {
       res.status(200).json(response);
     } catch (err) {
       console.log(err);
-      res
-        .status(400)
-        .json({
-          error: "Oppse! something went wrong while fetching movies.",
-          err,
-        });
+      res.status(400).json({
+        error: "Oppse! something went wrong while fetching movies.",
+        err,
+      });
     }
   }
 };
@@ -331,7 +329,20 @@ const handleVideoFiles = async (req, res) => {
       .json({ error: "Only admins can create and update movies." });
 };
 
+const searchMovies = async (req, res) => {
+  const { search } = req.query;
+  try {
+    const movies = await movieModel
+      .find({ title: { $regex: search, $options: "i" } })
+      .limit(10);
+    res.status(200).json(movies);
+  } catch (err) {
+    res.status(400).json({ error: "Oppse! Could not search for movies.".err });
+  }
+};
+
 module.exports = {
+  searchMovies,
   createMovieController,
   updateMovieController,
   deleteMovieController,
