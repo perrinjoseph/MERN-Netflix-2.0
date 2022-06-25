@@ -20,6 +20,7 @@ const API_ENDPOINTS = {
     GET_FIND_MOVIE: "/movies",
     GET_RANDOM_MOVIE: "/movies/random/banner",
     GET_MEDIA_ACCESS_LINK: "/movies/accessLink/media",
+    GET_SEARCH_MOVIES: "/movies/search/movies/searchfor/",
     POST_MOVIE_SLIDER: "/movies/search/genre/skip/limit/",
     POST_CREATE_MOVIE: "/movies",
     PUT_UPDATE_MOVIE: "/movies",

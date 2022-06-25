@@ -240,6 +240,34 @@
   }
 }
 
+.home--search {
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background: transparent;
+  transition: 0.3s ease-in-out;
+  margin-right: -15px;
+
+  &--input {
+    color: black;
+    margin: 0px 10px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 0px;
+    transition: 0.3s ease-in-out;
+
+    &:focus {
+      width: 100px;
+    }
+  }
+}
+.isFocusing {
+  background: white;
+}
+
 @media (max-width: 871px) {
   #navbar-left-links {
     position: fixed;
