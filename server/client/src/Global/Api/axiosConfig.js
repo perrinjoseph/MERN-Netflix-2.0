@@ -1,7 +1,8 @@
 import axios from "axios";
 
+export const baseURL = "https://netflixmernclone.herokuapp.com/api";
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

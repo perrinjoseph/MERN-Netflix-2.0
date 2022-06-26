@@ -17,6 +17,8 @@ import {
 } from "../../../Pages/Home/redux/thunks";
 import GLOBAL_ACTIONS from "../../Redux/actions";
 import { useLocation, useNavigate } from "react-router-dom";
+import { baseURL } from "../../Api/axiosConfig";
+import API_ENDPOINTS from "../../Api/api-endpoints";
 
 function MovieInformation() {
   const { moreLikeThis, movie, myList } = useSelector(
@@ -57,11 +59,11 @@ function MovieInformation() {
             }
           />
           <video
-            poster={`http://localhost:8080/api/movies/accessLink/media/${movie.thumbnailImage.filename}`}
+            poster={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${movie.thumbnailImage.filename}`}
             loop
             type="video/mp4"
             autoPlay={true}
-            src={`http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${movie.trailer}`}
+            src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/none/?type=trailer&path=${movie.trailer}`}
             className="movieInformation-modal--video"
           ></video>
           <div className="movieInformation-modal--video-overlay"></div>
@@ -170,7 +172,7 @@ function MovieInformation() {
                         <img
                           className="movieInformation-modal--infoContainer--more--card--img"
                           alt="movie"
-                          src={`http://localhost:8080/api/movies/accessLink/media/${movie?.thumbnailImage?.filename}`}
+                          src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${movie?.thumbnailImage?.filename}`}
                         ></img>
                       )}
                     </div>
@@ -187,7 +189,7 @@ function MovieInformation() {
                         <img
                           className="movieInformation-modal--infoContainer--more--card--img"
                           alt="movie"
-                          src={`http://localhost:8080/api/movies/accessLink/media/${movie?.thumbnailImage?.filename}`}
+                          src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${movie?.thumbnailImage?.filename}`}
                         ></img>
                       )}
                     </div>

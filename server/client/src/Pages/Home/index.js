@@ -15,6 +15,8 @@ import SliderLoading from "../../Global/Components/Slider/SliderLoading/SliderLo
 import { API_STATUS } from "../../Global/Api/constants";
 import useElementOnScreen from "../../Global/Hooks/useElementOnScreen";
 import { SLIDER_CATEGORIES_FOR_HOME_PAGE } from "../../Global/Components/Slider/constants";
+import { baseURL } from "../../Global/Api/axiosConfig";
+import API_ENDPOINTS from "../../Global/Api/api-endpoints";
 
 /*
 This is done to create a closure here. because the call back 
@@ -80,7 +82,7 @@ function Home() {
             onLoad={() => {
               setBannerImageLoaded(true);
             }}
-            src={`http://localhost:8080/api/movies/accessLink/media/${bannerMovie.data?.bannerImage?.filename}`}
+            src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${bannerMovie.data?.bannerImage?.filename}`}
             className={`home--header--banner ${
               bannerImageLoaded === true ? "home--header--banner--fadein" : ""
             }`}
@@ -93,7 +95,7 @@ function Home() {
           <div className="home--content--info--title">
             <img
               className="home--content--info--title "
-              src={`http://localhost:8080/api/movies/accessLink/media/${bannerMovie.data?.titleImage?.filename}`}
+              src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${bannerMovie.data?.titleImage?.filename}`}
               alt="Movie Name"
             ></img>
           </div>

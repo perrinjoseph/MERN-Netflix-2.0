@@ -4,7 +4,6 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const userModel = require("../models/user");
 
 dotenv.config();
 module.exports = (async function () {

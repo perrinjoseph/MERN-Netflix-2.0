@@ -2,6 +2,8 @@ import React from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import API_ENDPOINTS from "../../Global/Api/api-endpoints";
+import { baseURL } from "../../Global/Api/axiosConfig";
 import GLOBAL_ACTIONS from "../../Global/Redux/actions";
 
 function Watch() {
@@ -37,7 +39,7 @@ function Watch() {
         className="watch--video"
         autoPlay={true}
         controls
-        src={`http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${source}`}
+        src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/none/?type=trailer&path=${source}`}
         type="video/mp4"
       ></video>
     </div>

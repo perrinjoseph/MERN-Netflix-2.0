@@ -7,7 +7,7 @@ import moreBtn from "../../Assets/more-option-btn.svg";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import GLOBAL_ACTIONS from "../../Redux/actions";
-import axiosClient from "../../Api/axiosConfig";
+import axiosClient, { baseURL } from "../../Api/axiosConfig";
 import MOVIE_INFORMATION_ACTIONS from "../MovieInformation/redux/actions";
 import {
   addToMyListThunk,
@@ -15,6 +15,7 @@ import {
 } from "../../../Pages/Home/redux/thunks";
 import CardButton from "./CardButton";
 import { useLocation, useNavigate } from "react-router-dom";
+import API_ENDPOINTS from "../../Api/api-endpoints";
 
 let timer;
 const Card = React.forwardRef(
@@ -78,7 +79,7 @@ const Card = React.forwardRef(
         if (onHover === true) {
           try {
             await axiosClient.get(
-              `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
+              `${baseURL}/movies/accessLink/media/none/?type=trailer&path=${trailer}`
             );
           } catch (error) {
             console.log("Could not fetch the Trailer", error);
@@ -161,7 +162,7 @@ const Card = React.forwardRef(
             className={`card--img ${
               onHover && trailer ? "card--img-fadeOut" : ""
             }`}
-            src={`http://localhost:8080/api/movies/accessLink/media/${img}`}
+            src={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${img}`}
             alt="movie"
           ></img>
 
@@ -169,13 +170,13 @@ const Card = React.forwardRef(
             <div className="card--mediacontainer--popout">
               <video
                 ref={videoRef}
-                poster={`http://localhost:8080/api/movies/accessLink/media/${img}`}
+                poster={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${img}`}
                 className={`card--mediacontainer--video ${
                   onHover ? "card--mediacontainer--video-show" : ""
                 }`}
                 src={`${
                   onHover
-                    ? `http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${trailer}`
+                    ? `${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/none/?type=trailer&path=${trailer}`
                     : ""
                 }`}
                 autoPlay={onHover}
