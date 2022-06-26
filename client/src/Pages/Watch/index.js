@@ -1,20 +1,31 @@
 import React from "react";
-import movie from "../../Global/Videos/ozark-trailer.mp4";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import GLOBAL_ACTIONS from "../../Global/Redux/actions";
 
 function Watch() {
   const diapatch = useDispatch();
-  const { openPlayer } = useSelector(({ mediaPlayer: { openPlayer } }) => ({
-    openPlayer,
-  }));
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { source } = useSelector(
+    ({
+      mediaPlayer: {
+        data: { source },
+      },
+    }) => ({
+      source,
+    })
+  );
 
   const handleCloseBtnClick = () => {
-    diapatch(GLOBAL_ACTIONS.closeMediaPlayerAction())
+    const from = location.state?.from?.pathname || "/home";
+
+    diapatch(GLOBAL_ACTIONS.closeMediaPlayerAction());
+    navigate(from);
   };
   return (
-    <div className={`watch ${openPlayer ? "watch-open" : ""}`}>
+    <div className="watch watch-open">
       <MdClose
         size={30}
         className="watch--btn-back"
@@ -26,7 +37,7 @@ function Watch() {
         className="watch--video"
         autoPlay={true}
         controls
-        src={movie}
+        src={`http://localhost:8080/api/movies/accessLink/media/none/?type=trailer&path=${source}`}
         type="video/mp4"
       ></video>
     </div>

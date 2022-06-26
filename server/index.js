@@ -21,8 +21,8 @@ app.use(methodOverride("_method"));
 
 // NOTE: Express uses some weird path reg ex matching pattern which means that
 // api/auth/update/112 and api/users/update/123 are the same thing.
+app.use("/api/movies", moviesRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
-app.use("/api/movies", moviesRouter);
 
 app.listen(8080, () => console.log("🟢 Server is running on port 8080"));

@@ -84,7 +84,6 @@ const findAllUsersController = async (req, res) => {
 };
 
 const getUserStatsControleer = async (req, res) => {
-  console.log("ENTERED");
   try {
     const data = await User.aggregate([
       {
@@ -113,7 +112,6 @@ const findIfUserIsSignedUp = async (req, res) => {
     });
   try {
     const response = await userModel.find({ email });
-    console.log(response);
     if (response.length === 1)
       return res.status(400).json({ error: "User already exists." });
     else res.status(200).json({ message: "Success" });

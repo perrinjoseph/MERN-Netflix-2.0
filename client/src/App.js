@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Alert from "./Global/Components/Alert";
-import { ALERT_TYPES } from "./Global/Components/Alert/constants";
 import FallbackLoadingScreen from "./Global/Components/FallbackLoadingScreen";
 import { FALLBACK_SCREEN_TYPES } from "./Global/Components/FallbackLoadingScreen/constants";
 import useAuthentication from "./Global/Hooks/useAuthentication";
@@ -15,12 +14,23 @@ import Search from "./Pages/Search";
 import SignUp from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./Router/ProtectedRoute";
 import PublicRoute from "./Router/PublicRoute";
+import { AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
+import Watch from "./Pages/Watch";
+
 //Lazy loading home component
 const Home = lazy(() => import("./Pages/Home"));
 
 function NewApp() {
   useAxiosInterceptors();
   const [isLoading] = useAuthentication();
+  const { showAlert, alertType, alertMessage } = useSelector(
+    ({ globalAlerts: { showAlert, alertType, alertMessage } }) => ({
+      showAlert,
+      alertType,
+      alertMessage,
+    })
+  );
 
   /*
   custom navbars for Signup and login page are put inside the components themselves
@@ -30,7 +40,10 @@ function NewApp() {
   */
   return (
     <div className="App">
-      <Alert type={ALERT_TYPES.ERROR} />
+      <AnimatePresence>
+        {showAlert && <Alert type={alertType} message={alertMessage} />}
+      </AnimatePresence>
+
       {isLoading && (
         <FallbackLoadingScreen type={FALLBACK_SCREEN_TYPES.APP_LOADING} />
       )}
@@ -52,6 +65,7 @@ function NewApp() {
               <Route path="/new" element={<NewMovies />} />
               <Route path="/popular" element={<Popular />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/watch" element={<Watch />} />
             </Route>
           </Routes>
         </Suspense>

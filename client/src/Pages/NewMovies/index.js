@@ -14,7 +14,6 @@ function NewMovies() {
   );
   useEffect(() => {
     if (data.length === 0) {
-      console.log("hi");
       dispatch(getNewMoviesThunk());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

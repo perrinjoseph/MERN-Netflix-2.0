@@ -2,7 +2,7 @@
   position: fixed;
   margin-left: auto;
   margin-right: auto;
-  bottom: 70px; // go up and down by -70px is ok for phone and devices
+  bottom: 0; // go up and down by -70px is ok for phone and devices
   left: 0;
   right: 0;
   height: clamp(50px, 10vw, 90px);
@@ -18,21 +18,22 @@
   border: 3px solid $color-font-dark-990;
 
   &-success {
-    background: rgba($color: #0e3600d9, $alpha: 0.8); //$color-font-dark-960
+    background: rgba($color: #0e3600d9, $alpha: 0.8);
   }
   &-error {
-    background: rgba($color: #440000e9, $alpha: 0.8); //$color-font-dark-960
+    background: rgba($color: #440000e9, $alpha: 0.8);
   }
   &-warning {
-    background: rgba($color: #4c2300e9, $alpha: 0.8); //$color-font-dark-960
+    background: rgba($color: #4c2300e9, $alpha: 0.8);
   }
   &-info {
-    background: rgba($color: #003e46, $alpha: 0.8); //$color-font-dark-960
+    background: rgba($color: #003e46, $alpha: 0.8);
   }
 
   &--message {
     margin-left: 30px;
     width: 100%;
+    font-size: clamp(9px, 2vw, 15px);
 
     &-success {
       color: lime;

@@ -82,7 +82,7 @@ const userReducer = (state = defaultUserState, action) => {
  * the player window should popup on the screen.
  */
 const mediaPlayerDefaultState = {
-  data: { source: null, duration: null },
+  data: { source: null },
   openPlayer: false,
   error: null,
 };
@@ -93,11 +93,40 @@ const mediaPlayerReducer = (state = mediaPlayerDefaultState, action) => {
       return {
         ...state,
         openPlayer: true,
+        data: { ...state.data, source: action.payload.data },
       };
     case GLOBAL_ACTIONS_TYPES.MEDIA_PLAYER_ACTION_TYPES.CLOSE_MEDIA_PLAYER:
       return {
         ...state,
         openPlayer: false,
+        data: { ...state.data, source: null },
+      };
+    default:
+      return state;
+  }
+};
+
+const globalAlertsInitialState = {
+  showAlert: false,
+  alertType: null,
+  alertMessage: null,
+};
+
+const alertReducer = (state = globalAlertsInitialState, action) => {
+  switch (action.type) {
+    case GLOBAL_ACTIONS_TYPES.ALERT_ACTION_TYPES.SHOW_ALERT:
+      return {
+        ...state,
+        alertType: action.payload.alertType,
+        alertMessage: action.payload.alertMessage,
+        showAlert: true,
+      };
+    case GLOBAL_ACTIONS_TYPES.ALERT_ACTION_TYPES.HIDE_ALERT:
+      return {
+        ...state,
+        alertType: null,
+        alertMessage: null,
+        showAlert: false,
       };
     default:
       return state;
@@ -112,4 +141,5 @@ export default combineReducers({
   movieMoreInfo: moreInformationReducer,
   newMovies: newMoviesReducer,
   search: searchPageReducer,
+  globalAlerts: alertReducer,
 });

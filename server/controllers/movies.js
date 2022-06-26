@@ -174,7 +174,6 @@ const getMediaAccessLink = async (req, res) => {
   const filename = req.params.filename;
   const type = req.query?.type;
   if (type !== "video" && type !== "trailer") {
-    console.log(type);
     if (!filename) {
       res.status(400).json({ error: "Please provide a file name" });
     }
@@ -190,7 +189,19 @@ const getMediaAccessLink = async (req, res) => {
           files[0].contentType === "image/png" ||
           files[0].contentType === "image/jpeg"
         ) {
-          gfs.openDownloadStreamByName(filename).pipe(res);
+          const file = gfs.openDownloadStreamByName(filename);
+          file.pipe(res).on("finish", () => {
+            console.log("COMPLETED");
+          });
+
+          /**
+           * on('end', cb)
+           * .on('error', cb)
+           * .on('unpipe', cb)
+           * .on('drain', cb)
+           * .on('data', cb)
+           *  .on('close', cb)
+           */
         } else {
           res.status(400).json({
             error:
@@ -303,7 +314,6 @@ const handleVideoFiles = async (req, res) => {
   const { id } = req.params;
   const { type } = req.query;
   const path = req.file?.path;
-  console.log(path, type, id);
   const mimetype = req.file?.mimetype;
   if (req.user.isAdmin) {
     if (mimetype !== "video/mp4" || !mimetype || !path)

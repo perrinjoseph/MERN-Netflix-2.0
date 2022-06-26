@@ -14,6 +14,7 @@ import {
   deleteFromMyListThunk,
 } from "../../../Pages/Home/redux/thunks";
 import CardButton from "./CardButton";
+import { useLocation, useNavigate } from "react-router-dom";
 
 let timer;
 const Card = React.forwardRef(
@@ -32,7 +33,8 @@ const Card = React.forwardRef(
     ref
   ) => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
+    const location = useLocation();
     const { myList } = useSelector(
       ({
         homeScreen: {
@@ -119,6 +121,7 @@ const Card = React.forwardRef(
 
     const handlePlayButtonClick = () => {
       dispatch(GLOBAL_ACTIONS.openMediaPlayerAction(trailer));
+      navigate("/watch", { state: { from: location } });
     };
 
     return (

@@ -9,7 +9,8 @@ function Footer() {
         <aside className="footer--col1">
           <h2>NETFLIX CLONE</h2>
           <div>
-            Designed and Developed by <br></br> Perrin Joseph{" "}
+            Designed and Developed by <br></br> Perrin Joseph<br></br>
+            <small>perrinjoseph1998@gmail.com</small>
             <div className="footer--col1--icons">
               <FaFacebookF size={35} className="footer--col1--icons--icon" />
               <FaInstagram size={35} className="footer--col1--icons--icon" />
@@ -41,11 +42,26 @@ function Footer() {
                   Home -for testing
                 </Link>
               </li>
-              <li>Tv Shows</li>
-              <li>Movies</li>
-              <li>New & Popular</li>
-
-              <li>My List</li>
+              <li>
+                <Link to="/mylist" className="link-styles-reset link-footer">
+                  My List
+                </Link>
+              </li>
+              <li>
+                <Link to="/new" className="link-styles-reset link-footer">
+                  New
+                </Link>
+              </li>
+              <li>
+                <Link to="/popular" className="link-styles-reset link-footer">
+                  Popular
+                </Link>
+              </li>
+              <li>
+                <Link to="/search" className="link-styles-reset link-footer">
+                  Search
+                </Link>
+              </li>
             </ul>
           </nav>
         </aside>
@@ -53,14 +69,7 @@ function Footer() {
           <nav>
             <ul>
               <li>Helo & FAQ</li>
-              <li>
-                <Link
-                  to="/accountsetup"
-                  className="link-styles-reset link-footer"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
+              <li>Terms & Conditions</li>
               <li>Contact</li>
             </ul>
           </nav>

@@ -9,7 +9,7 @@ import Button from "../Button/Button";
 import { buttonTypes } from "../Button/constants";
 import { AiFillHome } from "react-icons/ai";
 import { BsCollectionPlayFill } from "react-icons/bs";
-import { MdLibraryAdd, MdWhatshot } from "react-icons/md";
+import { MdLibraryAdd, MdWhatshot, MdAdminPanelSettings } from "react-icons/md";
 import { FiCast } from "react-icons/fi";
 import {
   Link,
@@ -20,11 +20,13 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillPersonFill } from "react-icons/bs";
-import { logoutUserThunk } from "../../Redux/thunks";
+import { logoutUserThunk, showGlobalAlert } from "../../Redux/thunks";
 import useToggle from "../../Hooks/useToggle";
+import { ALERT_TYPES } from "../Alert/constants";
 
 function Navbar({ type }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  // eslint-disable-next-line no-unused-vars
+  const [_, setSearchParams] = useSearchParams();
 
   const chevronRef = useRef();
   const [toggle, setToggle] = useToggle(chevronRef);
@@ -239,12 +241,23 @@ function Navbar({ type }) {
                           Account
                         </article>
                       </div>
-                      <div className="navbar--section--links--dropdown--item">
+                      <div
+                        className="navbar--section--links--dropdown--item"
+                        onClick={() => {
+                          dispatch(
+                            showGlobalAlert(
+                              ALERT_TYPES.ERROR,
+                              "Only Admins can access the admin panel",
+                              4000
+                            )
+                          );
+                        }}
+                      >
                         <article className="navbar--section--links--dropdown--item--icon">
-                          $
+                          <MdAdminPanelSettings />
                         </article>
                         <article className="navbar--section--links--dropdown--item--option">
-                          Donate
+                          Admin Panel
                         </article>
                       </div>
                       <div

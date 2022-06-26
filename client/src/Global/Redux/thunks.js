@@ -40,3 +40,12 @@ export const logoutUserThunk = () => async (dispatch) => {
     dispatch(GLOBAL_ACTIONS.logoutUserSuccessAction());
   }
 };
+
+export const showGlobalAlert =
+  (alertType, alertMessage, delay = 600) =>
+  async (dispatch) => {
+    dispatch(GLOBAL_ACTIONS.showAlert(alertType, alertMessage));
+    setTimeout(() => {
+      dispatch(GLOBAL_ACTIONS.hideAlert());
+    }, delay);
+  };

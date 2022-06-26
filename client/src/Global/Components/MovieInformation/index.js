@@ -15,6 +15,8 @@ import {
   addToMyListThunk,
   deleteFromMyListThunk,
 } from "../../../Pages/Home/redux/thunks";
+import GLOBAL_ACTIONS from "../../Redux/actions";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function MovieInformation() {
   const { moreLikeThis, movie, myList } = useSelector(
@@ -28,6 +30,8 @@ function MovieInformation() {
     }) => ({ moreLikeThis, movie, myList })
   );
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const isMyListMovie = useMemo(
     () =>
@@ -69,6 +73,11 @@ function MovieInformation() {
               type={buttonTypes.SECONDARY_FILLED}
               title="Play"
               style={{ width: "30%", height: "40px" }}
+              onClick={() => {
+                dispatch(MOVIE_INFORMATION_ACTIONS.closeMoreInfoAction());
+                dispatch(GLOBAL_ACTIONS.openMediaPlayerAction(movie.trailer));
+                navigate("/watch", { state: { from: location } });
+              }}
             />
 
             {isMyListMovie ? (

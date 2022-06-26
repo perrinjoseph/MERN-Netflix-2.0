@@ -1,7 +1,8 @@
 import GLOBAL_ACTIONS_TYPES from "./types";
 
-const openMediaPlayerAction = () => ({
+const openMediaPlayerAction = (trailer) => ({
   type: GLOBAL_ACTIONS_TYPES.MEDIA_PLAYER_ACTION_TYPES.OPEN_MEDIA_PLAYER,
+  payload: { data: trailer },
 });
 
 const closeMediaPlayerAction = () => ({
@@ -39,6 +40,15 @@ const logoutUserSuccessAction = () => ({
   type: GLOBAL_ACTIONS_TYPES.USER_ACTION_TYPES.LOGOUT_USER_SUCCESS,
 });
 
+const showAlert = (alertType, alertMessage) => ({
+  type: GLOBAL_ACTIONS_TYPES.ALERT_ACTION_TYPES.SHOW_ALERT,
+  payload: { alertType, alertMessage },
+});
+
+const hideAlert = () => ({
+  type: GLOBAL_ACTIONS_TYPES.ALERT_ACTION_TYPES.HIDE_ALERT,
+});
+
 const GLOBAL_ACTIONS = {
   openMediaPlayerAction,
   closeMediaPlayerAction,
@@ -49,6 +59,8 @@ const GLOBAL_ACTIONS = {
   authenticateUserSuccessAction,
   authenticateUserErrorAction,
   logoutUserSuccessAction,
+  showAlert,
+  hideAlert,
 };
 
 export default GLOBAL_ACTIONS;
