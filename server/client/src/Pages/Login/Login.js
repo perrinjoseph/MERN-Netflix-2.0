@@ -64,6 +64,7 @@ function Login() {
               }`}
               placeholder="Email"
               value={email}
+              aria-label="email"
               name="email"
               onChange={handleChangeEmail}
               autoComplete="true"
@@ -75,6 +76,7 @@ function Login() {
                 errors.password && "GLOBAL-input-errorborder"
               }`}
               placeholder="Password"
+              aria-label="password"
               type="password"
               name="password"
               autoComplete="true"
