@@ -1,17 +1,24 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  mockReduxStore,
-} from "../../../Global/Utils/test";
+import { render, screen, fireEvent } from "../../../Global/Utils/test";
 import Login from "../Login";
+import axiosClient from "../../../Global/Api/axiosConfig";
+import API_ENDPOINTS from "../../../Global/Api/api-endpoints";
+
+jest.mock("axios", () => ({
+  ...jest.requireActual("axios"),
+  post: jest.fn().mockReturnValue("Success"),
+  get: jest.fn(),
+}));
 
 describe("Login tests", () => {
+  let axiosClientPostSpy;
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    axiosClientPostSpy = jest.spyOn(axiosClient, "post");
   });
+
   afterEach(() => {
     jest.clearAllMocks();
+    axiosClient.post.mockRestore();
   });
 
   test("Should allow user to type the username", () => {
@@ -55,17 +62,19 @@ describe("Login tests", () => {
 
   test("Should login when both email and password exist", () => {
     render(<Login />);
-    const mockDispatch = jest.spyOn(mockReduxStore, "dispatch");
     const loginInput = screen.getByRole("textbox", { name: "email" });
     const passwordInput = screen.getByPlaceholderText("Password");
     const loginButton = screen.getByRole("button", { name: "Sign In" });
 
     fireEvent.click(loginButton); // no email and password exists so login dispatch wont be fired
-    expect(mockDispatch).toBeCalledTimes(0);
+    expect(axiosClientPostSpy).toBeCalledTimes(0);
 
     fireEvent.change(loginInput, { target: { value: "test@gmail.com" } });
     fireEvent.change(passwordInput, { target: { value: "testPassword" } });
     fireEvent.click(loginButton); // Email and password exist so it will call the apilogin
-    expect(mockDispatch).toBeCalledTimes(1);
+    expect(axiosClientPostSpy).toBeCalledWith(API_ENDPOINTS.AUTH.POST_LOGIN, {
+      email: "test@gmail.com",
+      password: "testPassword",
+    });
   });
 });

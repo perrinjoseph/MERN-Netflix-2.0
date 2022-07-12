@@ -5,7 +5,6 @@ import rootReducer from "../Redux/rootReducer";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 
-let store;
 const AllProviders =
   (initialValue) =>
   ({ children }) => {
@@ -14,7 +13,6 @@ const AllProviders =
       initialValue,
       applyMiddleware(thunk)
     );
-    store = mockStore;
     return (
       <ReduxProvider store={mockStore}>
         <Router>{children}</Router>
@@ -30,4 +28,3 @@ export * from "@testing-library/react";
 
 //Overwrite
 export { customRenderer as render };
-export { store as mockReduxStore };

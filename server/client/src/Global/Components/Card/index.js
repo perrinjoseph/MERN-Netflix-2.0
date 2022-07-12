@@ -81,9 +81,7 @@ const Card = React.forwardRef(
             await axiosClient.get(
               `${baseURL}/movies/accessLink/media/none/?type=trailer&path=${trailer}`
             );
-          } catch (error) {
-            console.log("Could not fetch the Trailer", error);
-          }
+          } catch (error) {}
         }
       };
       getMovie();
@@ -127,14 +125,17 @@ const Card = React.forwardRef(
 
     return (
       <div
-        className="card"
+        className={`card ${onHover ? "hovering" : "not-hovering"}`}
         style={onHover ? (extend ? extendStyle : cardHoverEffectStyle) : {}}
         ref={ref}
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseLeave}
       >
         <section className="card--mediacontainer--mobileDesc">
-          <button className="card--mediacontainer--mobileDesc--btn">
+          <button
+            className="card--mediacontainer--mobileDesc--btn"
+            aria-label="More Info Button"
+          >
             <FiMoreHorizontal
               className="card--mediacontainer--mobileDesc--btn--mobileIcon"
               size={28}
@@ -169,6 +170,7 @@ const Card = React.forwardRef(
           {onHover && screenWidth >= 825 && (
             <div className="card--mediacontainer--popout">
               <video
+                aria-label="video-player"
                 ref={videoRef}
                 poster={`${baseURL}${API_ENDPOINTS.MOVIES.GET_MEDIA_ACCESS_LINK}/${img}`}
                 className={`card--mediacontainer--video ${
